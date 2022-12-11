@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Token{
 	private static ArrayList<String> tokenClasses = new ArrayList<String>();

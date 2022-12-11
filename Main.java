@@ -30,12 +30,15 @@ public class Main {
             fr.close();
         }catch (Exception e) {
         	System.out.println("[Error] "+filename+" can't be opened.\n");
+        	e.printStackTrace();
         }
     	
     }
     
 
 	public static void main(String[] args) {
+	    Token tokens = new Token();
+	    tokens.setTokenClass();
 		readTxt();
 	}
 	
