@@ -6,20 +6,20 @@ public class Main {
         System.out.print("filename(xxx.txt):");
         String filename = "test.txt";
 
-        //¿é¤JÀÉ¦W
+        //è¼¸å…¥æª”å
 //        java.util.Scanner input = new java.util.Scanner(System.in);
 //        String filename = input.nextLine();
 //        input.close();
         
         try {
-            //Åª¨úÀÉ®×
+            //è®€å–æª”æ¡ˆ
         	
             FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             String inputLine;
             
     		Scanner sc = new Scanner();
-            //³v¦æÅª¨ú
+            //é€è¡Œè®€å–
             while (br.ready()) {
             	inputLine = br.readLine();
             	System.out.println(inputLine);
@@ -33,7 +33,6 @@ public class Main {
         }
     	
     }
-    
     
 
 	public static void main(String[] args) {
