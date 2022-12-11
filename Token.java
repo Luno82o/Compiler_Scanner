@@ -22,6 +22,7 @@ public class Token{
     	tokenClasses.add("Comment");
     	tokenClasses.add("UndefinedToken");
     	tokenClasses.add("SkippedToken");
+    	
     	reservedWord.add("include");
     	reservedWord.add("main");
     	reservedWord.add("char");
@@ -49,6 +50,7 @@ public class Token{
     		return 99;
     	}
     }
+    
     public int getRWIndex(String token) {
     	return reservedWord.indexOf(token);
     }

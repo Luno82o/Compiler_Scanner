@@ -15,9 +15,49 @@ public class Scanner {
         for(int i = 0; i < tokens_1st.length; i++) {
         	if(i == 0 && tokens.getTokenClass(tokens_1st[i]) == 0) {
                 System.out.println("token "+tokens_1st[i]+" belongs to reserved word.");
-                switchNextAct(tokentype);
-            	tokentype = tokens.getRWIndex(tokens_1st[i]);
-                System.out.println("token type : "+tokentype);
+                
+        		tokentype = tokens.getRWIndex(tokens_1st[i]);
+//                switchNextAct(tokentype);
+//                System.out.println("token type : "+tokentype);
+                
+        		switch(tokens_1st[i]) {
+	        		case "include":
+	        			
+	        			break;
+	        		case "main":
+	        			break;
+	        		case "char":
+	        			break;
+	        		case "int":
+	        			break;
+	        		case "float":
+	        			break;
+	        		case "if":
+	        			break;
+	        		case "else":
+	        			break;
+	        		case "elseif":
+	        			break;
+	        		case "for":
+	        			break;
+	        		case "while":
+	        			break;
+	        		case "do":
+	        			break;
+	        		case "return":
+	        			break;
+	        		case "switch":
+	        			break;
+	        		case "case":
+	        			break;
+	        		case "printf":
+	        			break;
+	        		case "scanf":
+	        			break;
+        			default:
+        		}
+                
+                
             }else {
             	System.out.println("no");
             }
@@ -35,12 +75,24 @@ public class Scanner {
     	
     	for(int i=0; i<count; i++) {
     		token_st[i] = st.nextToken();
+    		
 //			System.out.println(Arrays.toString(token_st));
     	}    	
     	return token_st;
     }
     
     public void switchNextAct(int tokentype) {
+    	switch(tokentype) {
+    		case 0:
+    			break;
+    		case 1:
+    			break;
+    		case 2 :
+    			break;
+    	     default :
+
+    	}
+    			
     	
     }
 }
