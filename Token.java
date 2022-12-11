@@ -74,21 +74,3 @@ public class Token{
 ////private static ArrayList<String> comment = new ArrayList<String>();
 ////private static ArrayList<String> undefinedToken = new ArrayList<String>();
 ////private static ArrayList<String> SkippedToken = new ArrayList<String>();
-
-
-//tokenClasses.add("ReservedWord");
-//tokenClasses.add("LibraryName");
-//tokenClasses.add("Identifier");
-//tokenClasses.add("Character");
-//tokenClasses.add("Number");
-//tokenClasses.add("Pointer");
-//tokenClasses.add("Bracket");
-//tokenClasses.add("Operator");
-//tokenClasses.add("Comparator");
-//tokenClasses.add("Address");
-//tokenClasses.add("Punctuation");
-//tokenClasses.add("FormatSpecifier");
-//tokenClasses.add("PrintedToken");
-//tokenClasses.add("Comment");
-//tokenClasses.add("UndefinedToken");
-//tokenClasses.add("SkippedToken");

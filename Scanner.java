@@ -15,6 +15,7 @@ public class Scanner {
         for(int i = 0; i < tokens_1st.length; i++) {
         	if(i == 0 && tokens.getTokenClass(tokens_1st[i]) == 0) {
                 System.out.println("token "+tokens_1st[i]+" belongs to reserved word.");
+                switchNextAct(tokentype);
             	tokentype = tokens.getRWIndex(tokens_1st[i]);
                 System.out.println("token type : "+tokentype);
             }else {
@@ -24,7 +25,7 @@ public class Scanner {
     }
     
     public String[] splitSentence(String line) {
-    	/* ±Ncode¥ÎªÅ®æ¤À¶}
+    	/* å°‡codeç”¨ç©ºæ ¼åˆ†é–‹
     	 * Ex:	int i, k, m, *id; ===> [int, i,, k,, m,, *id;]
     	 */
     	
@@ -38,6 +39,10 @@ public class Scanner {
     	}    	
     	return token_st;
     }
+    
+    public void switchNextAct(int tokentype) {
+    	
+    }
 }
 
-//System.out.println(valueName.getClass().getSimpleName());		//¨ú±oÅÜ¼Æªºtype
+//System.out.println(valueName.getClass().getSimpleName());		//å–å¾—è®Šæ•¸çš„type
