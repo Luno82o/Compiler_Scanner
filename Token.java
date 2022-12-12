@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 public class Token{
+	private static ArrayList<String> tokenBuf = new ArrayList<String>();
+	
 	private static ArrayList<String> tokenClasses = new ArrayList<String>();
 	private static ArrayList<String> reservedWord = new ArrayList<String>();
 	
@@ -40,20 +42,14 @@ public class Token{
     	reservedWord.add("scanf");
     }
     
-    public int getTokenClass(String token) {
-    	if(reservedWord.contains(token)) {
-    		return tokenClasses.indexOf("ReservedWord");
-//    	} else if(reservedWord.contains(token)) {
-//    		return "unfinish";
-    	} else {
-    		return 99;
-    	}
+    public void addTokenBuf(String token) {
+    	tokenBuf.add(token);
     }
     
-    public int getRWIndex(String token) {
-    	return reservedWord.indexOf(token);
+    public void coutTokenBuf() {
+    	System.out.println(tokenBuf);
     }
-
+    
 } 
 
 
