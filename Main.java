@@ -19,6 +19,8 @@ public class Main {
 	    sc.readTxt(filename);
 	    tokens.coutTokenBuf();
 	    
+	    String tmp = tokens.getTokenBuf(1, 2);
+        System.out.print(tmp);
 	}
 	
 }

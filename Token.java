@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Token{
-	private static ArrayList<String> tokenBuf = new ArrayList<String>();
+	private static ArrayList<ArrayList> tokenBuf = new ArrayList<ArrayList>();
 	
 	private static ArrayList<String> tokenClasses = new ArrayList<String>();
 	private static ArrayList<String> reservedWord = new ArrayList<String>();
@@ -42,12 +42,16 @@ public class Token{
     	reservedWord.add("scanf");
     }
     
-    public void addTokenBuf(String token) {
+    public void addTokenBuf(ArrayList<String> token) {
     	tokenBuf.add(token);
     }
     
     public void coutTokenBuf() {
     	System.out.println(tokenBuf);
+    }
+    
+    public String getTokenBuf(int x, int y) {
+    	return String.valueOf(tokenBuf.get(x).get(y));
     }
     
 } 

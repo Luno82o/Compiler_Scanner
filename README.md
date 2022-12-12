@@ -40,7 +40,7 @@ for (i = 1; i < 10; i++) {
 
 } 
 
-printf(²xxx yyy %d\n², k);   // This is a comment /\* This is also a comment. \*/ 
+printf("xxx yyy %d\n", k);   // This is a comment /\* This is also a comment. \*/ 
 
 \------------------------------------------------------------------ 
 
@@ -67,7 +67,7 @@ printf(²xxx yyy %d\n², k);   // This is a comment /\* This is also a comment. 
 
 40. **token** printf **belongs to** reserved word 
 40. **token** ( **belongs to** bracket 
-40. **token** ² **belongs to** punctuation 
+40. **token** " **belongs to** punctuation 
 40. **token** xxx **belongs to** printed token 
 40. **token** yyy **belongs to** printed token 
 40. **token** %d **belongs to** format specifier 
@@ -160,6 +160,9 @@ Comment: 2
 
 /\* This is also a comment. \*/ 
 
+
+
+
 <stdio.h> 
 
 int ia, \*ie, forif; 
@@ -170,7 +173,7 @@ ia = (\*ie) + ib; ia = ia \* 2;
 
 ca = ¢A¢; 
 
-whilefor (ia<3) forif = forif + 1; sCAnf(²%c², &cb); 
+whilefor (ia<3) forif = forif + 1; sCAnf("%c", &cb); 
 
 ia = \*forif + (-2); 
 

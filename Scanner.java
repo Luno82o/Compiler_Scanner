@@ -28,9 +28,10 @@ public class Scanner {
     
     
     public void splitToken(String inputLine) {
+    	ArrayList<String> tokensTmp = new ArrayList<String>();
     	int token_start = 0, token_end = 0;
 //        System.out.println("inputLine.length: "+inputLine.length());
-        
+    
         while(token_start < inputLine.length()) {
             for(int i = token_start; i < inputLine.length(); i++) {
 //            	System.out.println(inputLine.charAt(i));
@@ -51,7 +52,9 @@ public class Scanner {
                 
             	if(buf!=' ') {
 //            		System.out.println(buf);
-            		tokens.addTokenBuf(Character.toString(buf));
+
+    	            tokensTmp.add(Character.toString(buf));
+//            		tokens.addTokenBuf(Character.toString(buf));
             	}
 	            token_start = token_end + 1;
         	} else {
@@ -59,13 +62,18 @@ public class Scanner {
 	            inputLine.getChars(token_start, token_end, buf, 0);
 //	            System.out.println(buf);
 
-        		tokens.addTokenBuf(String.valueOf(buf));
+	            tokensTmp.add(String.valueOf(buf));
 	            token_start = token_end;
         	}
-//        	System.out.println(tokenBuf);
         }
+    	System.out.println(tokensTmp);
+		tokens.addTokenBuf(tokensTmp);
+    }    
         
-        
+    
+    public void splitToken() {
+    	
+    }
 //        		switch(token) {
 //	        		case "include":
 //	        			
@@ -107,7 +115,6 @@ public class Scanner {
 //            }else {
 //            	System.out.println("no");
 //            }
-    }
 }
 
 //System.out.println(valueName.getClass().getSimpleName());		//取得變數的type
