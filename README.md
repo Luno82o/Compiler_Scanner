@@ -1,15 +1,14 @@
 # Compiler_Scanner
 
-
+## 規則
 - 最多 3 人一組，用自己熟悉的程式語言撰寫
 - 輸入一般  .txt 文字檔  (可於執行時輸入檔名 )，切出各 token，判斷各 token 類別 
 - 輸出  .txt 文字檔，若輸入檔名為 test.txt，輸出檔名為 scanner\_test.txt 
 - 計算 token 總數及各類別 token 個數，列於輸出檔最後端
 - 找出 undefined token，從下一行開始再次 scan，同時列出 skipped token 
 - 期末 demo 並繳交書面報告，說明程式架構及 token 判斷方式 
-- Token 類別 
 
-
+## Token 類別 
 
 |類別 |格式 ||說明 |
 | - | - | :- | - |
@@ -85,7 +84,9 @@ printf(²xxx yyy %d\n², k);   // This is a comment /\* This is also a comment. 
 
 Total: 53 tokens 
 
-Reserved word: 4 include 
+Reserved word: 4
+
+include 
 
 int 
 
@@ -93,23 +94,33 @@ for
 
 printf 
 
-Library name: 1 <stdio.h> 
+Library name: 1
 
-Identifier: 12 i   (x5) 
+<stdio.h> 
+
+Identifier: 12 
+
+i   (x5) 
 
 k   (x4) 
 
 m   (x3) 
 
-Number: 3 1 
+Number: 3 
+
+1 
 
 10 
 
 100 
 
-Pointer: 1 \*id 
+Pointer: 1 
 
-Bracket: 6 (   (x2) 
+\*id 
+
+Bracket: 6 
+
+(   (x2) 
 
 )   (x2) 
 
@@ -119,13 +130,17 @@ Bracket: 6 (   (x2)
 
 Operator: 6 
 
-- (x3) ++ 
+= (x3)
+
+++ 
 
 \+ 
 
 – 
 
-Comparator: 1 < 
+Comparator: 1 
+
+< 
 
 Punctuation: 13 
 
@@ -133,8 +148,7 @@ Punctuation: 13
 
 ,   (x4) 
 
-- (x6) 
-- (x2) 
+-(x6)(x2) 
 
 Format specifier: 2 %d 
 
@@ -232,24 +246,31 @@ Number: 2 (-2)
 
 5 
 
-Pointer: 3 \*ie   (x3) 
+Pointer: 3 
 
-Bracket: 3 (   (x2) 
+\*ie   (x3) 
+
+Bracket: 3 
+
+(   (x2) 
 
 ) 
 
 Operator: 7 
 
-- (x4) 
+\- (x4) 
 
-\+   (x2) \* 
+\+   (x2) 
+
+\* 
 
 Comparator: 1 < 
 
 Punctuation: 10 ,   (x3) 
 
-- (x5) 
-- (x2) 
+\= (x5) 
+
+\+ (x2) 
 
 Format specifier: 1 %c 
 
