@@ -36,7 +36,7 @@ public class Scanner {
 //            	System.out.println(inputLine.charAt(i));
 //            	System.out.println("i = "+i);
             	
-            	if(!Character.isLetterOrDigit(inputLine.charAt(i)) || i == inputLine.length()-1) {
+            	if(!Character.isLetterOrDigit(inputLine.charAt(i))) {
             		token_end = i;
             		break;
             	}
@@ -50,14 +50,14 @@ public class Scanner {
                 buf = inputLine.charAt(token_start);
                 
             	if(buf!=' ') {
-            		System.out.println(buf);
+//            		System.out.println(buf);
             		tokens.addTokenBuf(Character.toString(buf));
             	}
 	            token_start = token_end + 1;
         	} else {
-	            char buf[]=new char[(token_end-token_start)+1];
+	            char buf[] = new char[(token_end-token_start) + 1];
 	            inputLine.getChars(token_start, token_end, buf, 0);
-	            System.out.println(buf);
+//	            System.out.println(buf);
 
         		tokens.addTokenBuf(String.valueOf(buf));
 	            token_start = token_end;

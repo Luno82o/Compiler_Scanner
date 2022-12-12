@@ -12,7 +12,7 @@ public class Main {
 //        java.util.Scanner input = new java.util.Scanner(System.in);
 //        String filename = input.nextLine();
 //        input.close();
-        String filename = "test2.txt";
+        String filename = "test.txt";
         
 	    sc.readTxt(filename);
 	    tokens.coutTokenBuf();
