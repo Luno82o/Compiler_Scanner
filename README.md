@@ -10,28 +10,24 @@
 
 ## Token 類別 
 
-|類別 |格式 ||說明 |
-| - | - | :- | - |
-||include  main  char  int  float |if ||
-|Reserved word |else  elseif  for  while  do |return|允許各式大小寫組合|
-||switch  case  printf  scanf |||
-|Library name |<xxx.h> ||前面必須存在  #include， 否則視為 undefined token|
-||||由英文字母、底線及數字|
-|Identifier |char/int/float 有定義的變數||組成，限定英文字母開頭，|
-||||否則視為 undefined token|
-|Character |¢\*¢ ||¢\*¢  算 1 個 token |
-|Number |整數 /浮點數 /負數 負數可以表示成  -3 或  (-3) ||算 1 個 token |
-|Pointer |\*identifier ||\*identifier 算 1 個 token |
-|Bracket |(   )   [   ]   {   } |||
-|Operator |+   -   \*   /   %   ^   ++   --   &   |   = |||
-|Comparator |= =   <   >   <=   >=   != |||
-|Address |&identifier identifier 必須已定義||&identifier 算 1 個 token |
-|Punctuation |,   ;   :   #   ²   ¢ |||
-|Format specifier |%d   %f   %c   \\* |||
-|Printed token |printf 或 scanf 裡直接印出的 token ||以空格區隔|
-|Comment |/\* … \*/    或    // … ||不管內容，都算 1 個 token|
-|Undefined token ||||
-|Skipped token |||不管內容，都算 1 個 token|
+|類別 |格式 |說明 |
+| - | - | - |
+|Reserved word|include  main  char  int  float  if  else  elseif  for  while  do  return  switch  case  printf  scanf|允許各式大小寫組合|
+|Library name |<xxx.h> |前面必須存在  #include， 否則視為 undefined token|
+|Identifier |char/int/float 有定義的變數|由英文字母、底線及數字組成，限定英文字母開頭，否則視為 undefined token|
+|Character |'\*'|'\*'  算 1 個 token |
+|Number |整數 /浮點數 /負數 負數可以表示成  -3 或  (-3) |算 1 個 token |
+|Pointer |\*identifier |\*identifier 算 1 個 token |
+|Bracket |(   )   [   ]   {   } ||
+|Operator |+   -   \*   /   %   ^   ++   --   &     = ||
+|Comparator |= =   <   >   <=   >=   != ||
+|Address |&identifier identifier 必須已定義|&identifier 算 1 個 token |
+|Punctuation |,   ;   :   #   ²   ¢ ||
+|Format specifier |%d   %f   %c   \\* ||
+|Printed token |printf 或 scanf 裡直接印出的 token |以空格區隔|
+|Comment |/\* … \*/    或    // … |不管內容，都算 1 個 token|
+|Undefined token |||
+|Skipped token ||不管內容，都算 1 個 token|
 #include<stdio.h> 
 
 int i, k, m, \*id; 
