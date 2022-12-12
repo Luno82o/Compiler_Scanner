@@ -14,7 +14,7 @@ public class Main {
 //        input.close();
         String filename = "test.txt";
         
-	    sc.readTxt(filename);
+	    sc.readTxt("/txt/"+filename);
 	    tokens.coutTokenBuf();
 	    
 	}
