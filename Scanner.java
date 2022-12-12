@@ -51,7 +51,6 @@ public class Scanner {
                 
             	if(buf!=' ') {
             		System.out.println(buf);
-//            		tokenBuf.add(Character.toString(buf));
             		tokens.addTokenBuf(Character.toString(buf));
             	}
 	            token_start = token_end + 1;
@@ -59,7 +58,6 @@ public class Scanner {
 	            char buf[]=new char[(token_end-token_start)+1];
 	            inputLine.getChars(token_start, token_end, buf, 0);
 	            System.out.println(buf);
-//        		tokenBuf.add(String.valueOf(buf));
 
         		tokens.addTokenBuf(String.valueOf(buf));
 	            token_start = token_end;
