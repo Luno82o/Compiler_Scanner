@@ -92,3 +92,22 @@ public class Token{
 ////private static ArrayList<String> comment = new ArrayList<String>();
 ////private static ArrayList<String> undefinedToken = new ArrayList<String>();
 ////private static ArrayList<String> SkippedToken = new ArrayList<String>();
+
+
+//public class Token{
+//	private static String a ;
+//	private static Map b;
+//	private static int c;
+//	
+//	public void addToken() {
+//		b.add();
+//	}
+//}
+//
+//Token ReservedWord = new Token();
+//Token LibraryName = new Token();
+//Token Identifier = new Token();
+//
+//ReservedWord.addToken();
+//LibraryName.addToken();
+//Identifier
