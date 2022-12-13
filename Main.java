@@ -26,6 +26,8 @@ public class Main {
 //	    tokens.addRWMap("int");
 //	    tokens.addRWMap("cout");
 	    tokens.pRWMap();
+	    sc.test();
+
 	}
 	
 }

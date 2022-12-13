@@ -63,6 +63,8 @@ public class Token{
     	} else {
     		reservedWord.put(token, 1);
     	}
+
+    	System.out.println("addRWMap: "+token);
     }
     
     // 印出Map-reservedWord

@@ -28,6 +28,8 @@
 |Comment |/\* … \*/    或    // … |不管內容，都算 1 個 token|
 |Undefined token |||
 |Skipped token ||不管內容，都算 1 個 token|
+
+
 #include<stdio.h> 
 
 int i, k, m, \*id; 

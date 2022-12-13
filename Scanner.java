@@ -32,8 +32,7 @@ public class Scanner {
     	ArrayList<String> tokensTmp = new ArrayList<String>();
     	int token_start = 0, token_end = 0;
 //        System.out.println("inputLine.length: "+inputLine.length());
-    
-    	// 
+
         while(token_start < inputLine.length()) {
          
         	int i;
@@ -72,6 +71,7 @@ public class Scanner {
 
         }
 		tokens.addTokenBuf(tokensTmp);
+		System.out.println(tokensTmp);
     }    
 
     Pattern ptn_hashtag  = Pattern.compile("#", Pattern.CASE_INSENSITIVE); 
@@ -93,144 +93,326 @@ public class Scanner {
     Pattern ptn_printf = Pattern.compile("printf", Pattern.CASE_INSENSITIVE); 
     Pattern ptn_scanf = Pattern.compile("scanf", Pattern.CASE_INSENSITIVE); 
 
+    Pattern ptn_identifier = Pattern.compile("([a-zA-Z]+)([a-zA-Z0-9]*)", Pattern.CASE_INSENSITIVE); 
+    
+    public void test() {
+    	String test = "5ers45";
+    	Matcher mat_identifier	= ptn_identifier.matcher(test);
+    	System.out.println(mat_identifier.matches());
+    }
+    
     public void scan() {
 		int state;
+		
+		boolean bool_punctuation = false;
+		
     	for(int i=0 ; i<tokens.getTokenBufSize() ; i++) {
-        	for(int j=0; j <tokens.getTokenBuf(i).size() ; j++) {
         		
-        		String tkn_tmp		= tokens.getOneTokenBuf(i, j);
-        		Matcher mat_hashtag	= ptn_hashtag.matcher(tkn_tmp);
-        		Matcher mat_main	= ptn_main.matcher(tkn_tmp);
-        		Matcher mat_char	= ptn_char.matcher(tkn_tmp);
-        		Matcher mat_int		= ptn_int.matcher(tkn_tmp);
-        		Matcher mat_float	= ptn_float.matcher(tkn_tmp);
-        		Matcher mat_if		= ptn_if.matcher(tkn_tmp);
-        		Matcher mat_else 	= ptn_else.matcher(tkn_tmp);
-        		Matcher mat_elseif 	= ptn_elseif.matcher(tkn_tmp);
-        		Matcher mat_for 	= ptn_for.matcher(tkn_tmp);
-        		Matcher mat_while 	= ptn_while.matcher(tkn_tmp);
-        		Matcher mat_do 		= ptn_do.matcher(tkn_tmp);
-        		Matcher mat_return 	= ptn_return.matcher(tkn_tmp);
-        		Matcher mat_switch 	= ptn_switch.matcher(tkn_tmp);
-        		Matcher mat_case 	= ptn_case.matcher(tkn_tmp);
-        		Matcher mat_printf 	= ptn_printf.matcher(tkn_tmp);
-        		Matcher mat_scanf 	= ptn_scanf.matcher(tkn_tmp);
+    		String tkn_tmp		= tokens.getOneTokenBuf(i, 0);
+    		Matcher mat_hashtag	= ptn_hashtag.matcher(tkn_tmp);
+    		Matcher mat_main	= ptn_main.matcher(tkn_tmp);
+    		Matcher mat_char	= ptn_char.matcher(tkn_tmp);
+    		Matcher mat_int		= ptn_int.matcher(tkn_tmp);
+    		Matcher mat_float	= ptn_float.matcher(tkn_tmp);
+    		Matcher mat_if		= ptn_if.matcher(tkn_tmp);
+    		Matcher mat_else 	= ptn_else.matcher(tkn_tmp);
+    		Matcher mat_elseif 	= ptn_elseif.matcher(tkn_tmp);
+    		Matcher mat_for 	= ptn_for.matcher(tkn_tmp);
+    		Matcher mat_while 	= ptn_while.matcher(tkn_tmp);
+    		Matcher mat_do 		= ptn_do.matcher(tkn_tmp);
+    		Matcher mat_return 	= ptn_return.matcher(tkn_tmp);
+    		Matcher mat_switch 	= ptn_switch.matcher(tkn_tmp);
+    		Matcher mat_case 	= ptn_case.matcher(tkn_tmp);
+    		Matcher mat_printf 	= ptn_printf.matcher(tkn_tmp);
+    		Matcher mat_scanf 	= ptn_scanf.matcher(tkn_tmp);
 
-        		if(mat_hashtag.matches())
-        			state = 0;
-        		else if(mat_main.matches())
-        			state = 1;
-        		else if(mat_char.matches()) 
-        			state = 2;
-        		else if(mat_int.matches()) 
-        			state = 3;
-        		else if(mat_float.matches())
-        			state = 4;
-        		else if(mat_if.matches())
-        			state = 5;
-        		else if(mat_else.matches()) 
-        			state = 6;
-        		else if(mat_elseif.matches())
-        			state = 7;
-        		else if(mat_for.matches()) 
-        			state = 8;
-        		else if(mat_while.matches())
-        			state = 9;
-        		else if(mat_do.matches())
-        			state = 10;
-        		else if(mat_return.matches())
-        			state = 11;
-        		else if(mat_switch.matches())
-        			state = 12;
-                else if(mat_case.matches())
-                	state = 13;
-                else if(mat_printf.matches()) 
-                	state = 14;
-                else if(mat_scanf.matches())
-                	state = 15;
-                else 
-                	state = 16;
+    		if(mat_hashtag.matches())
+    			state = 0;
+    		else if(mat_main.matches())
+    			state = 1;
+    		else if(mat_char.matches()) 
+    			state = 2;
+    		else if(mat_int.matches()) 
+    			state = 3;
+    		else if(mat_float.matches())
+    			state = 4;
+    		else if(mat_if.matches())
+    			state = 5;
+    		else if(mat_else.matches()) 
+    			state = 6;
+    		else if(mat_elseif.matches())
+    			state = 7;
+    		else if(mat_for.matches()) 
+    			state = 8;
+    		else if(mat_while.matches())
+    			state = 9;
+    		else if(mat_do.matches())
+    			state = 10;
+    		else if(mat_return.matches())
+    			state = 11;
+    		else if(mat_switch.matches())
+    			state = 12;
+            else if(mat_case.matches())
+            	state = 13;
+            else if(mat_printf.matches()) 
+            	state = 14;
+            else if(mat_scanf.matches())
+            	state = 15;
+            else 
+            	state = 16;
                 
         		
-        		if(j==0) {
-        			switch(state) {
-        				// #
-	        			case 0:
-	        				// 判斷#後面是否為include
-	        				Matcher mat_include = ptn_include.matcher(tokens.getOneTokenBuf(i, j+1));
-	        				if(mat_include.matches()) {
-	        					
-	        					// 合併<xxx.h>
-	        					String library_tmp = "";
-	        					for(int k=2 ; k<=6 ; k++)
-	        						library_tmp = library_tmp + tokens.getTokenBuf(i).get(k);
-	        					
-	        					// 判斷#include後面是否為<xxx.h>
-	        					Matcher mat_libname = ptn_libname.matcher(library_tmp);
-	        					if(mat_libname.matches()) {
-	        						
-	        						// token格式為:#include<xxx.h>
-	        						tokens.addRWMap("#");
-	        						tokens.addRWMap("include");
-	        						tokens.addRWMap(library_tmp);
-	        						// j 移至下一行
-	        						j = tokens.getTokenBuf(i).size();
-	        					}
-	        				}
-	        				break;
-        				// main
-	        			case 1:
-	        				break;
-        			}
-        			
-        		} else {
-        			
-        		}
-        	}
+    			switch(state) {
+    			
+    				// #
+        			case 0:
+						tokens.addRWMap(tkn_tmp);
+        				// 判斷#後面是否為include
+        				Matcher mat_include = ptn_include.matcher(tokens.getOneTokenBuf(i, 1));
+        				
+        				if(mat_include.matches()) {
+        					// 合併<xxx.h>
+        					String library_tmp = "";
+        					for(int k=2 ; k<=6 ; k++)
+        						library_tmp = library_tmp + tokens.getTokenBuf(i).get(k);
+        					
+        					// 判斷#include後面是否為<xxx.h>
+        					Matcher mat_libname = ptn_libname.matcher(library_tmp);
+        					if(mat_libname.matches()) {
+        						
+        						// token格式為:#include<xxx.h>
+        						tokens.addRWMap("include");
+        						tokens.addRWMap(library_tmp);
+        					} else {
+        						tokens.addRWMap("notmatch");
+        					}
+        				} else {
+    						tokens.addRWMap("notmatch");
+        				}
+        				break;
+        				
+    				// main
+        			case 1:
+        				break;
+        				
+        			// char
+        			case 2:
+						tokens.addRWMap(tkn_tmp);
+        				bool_punctuation = false;
+    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
+    						String tk = tokens.getOneTokenBuf(i, j); 
+    		        		
+    		        		if (!bool_punctuation) {
+
+        		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
+	    		        		if (mat_identifier.matches()) {
+	    		        			
+	    		        			tokens.addRWMap(tk);
+	    		        			bool_punctuation = true;
+	    		        			
+	    		        		} else if (tk.equals("*")) {
+	    		        			
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	    		        			if(mat_identifi.matches()) {
+		    		        			String pointer_tmp = "";
+	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
+		    		        			tokens.addRWMap(pointer_tmp);
+		        		        		j++;
+		    		        			bool_punctuation = true;
+	    		        			}
+	    		        			
+	    		        		} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+	    		        		
+    		        		} else {
+    		        			
+    		        			if (tk.equals(",")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else if (tk.equals(";")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+    		        			
+    		        		}
+    					}
+        				break;
+        				
+        			// int
+        			case 3:
+						tokens.addRWMap(tkn_tmp);
+        				bool_punctuation = false;
+    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
+    						String tk = tokens.getOneTokenBuf(i, j); 
+    		        		
+    		        		if (!bool_punctuation) {
+
+        		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
+        		        		if (mat_identifier.matches()) {
+	    		        			
+	    		        			tokens.addRWMap(tk);
+	    		        			bool_punctuation = true;
+	    		        			
+	    		        		} else if (tk.equals("*")) {
+	    		        			
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	    		        			if(mat_identifi.matches()) {
+		    		        			String pointer_tmp = "";
+	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
+		    		        			tokens.addRWMap(pointer_tmp);
+		        		        		j++;
+		    		        			bool_punctuation = true;
+	    		        			}
+	    		        			
+	    		        		} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+	    		        		
+    		        		} else {
+    		        			
+    		        			if (tk.equals(",")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else if (tk.equals(";")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+    		        			
+    		        		}
+    					}
+    					
+        				break;
+        				
+    				// float
+        			case 4:
+						tokens.addRWMap(tkn_tmp);
+        				bool_punctuation = false;
+    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
+    						String tk = tokens.getOneTokenBuf(i, j); 
+    		        		
+    		        		if (!bool_punctuation) {
+
+        		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
+        		        		if (mat_identifier.matches()) {
+	    		        			
+	    		        			tokens.addRWMap(tk);
+	    		        			bool_punctuation = true;
+	    		        			
+	    		        		} else if (tk.equals("*")) {
+	    		        			
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	    		        			if(mat_identifi.matches()) {
+		    		        			String pointer_tmp = "";
+	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
+		    		        			tokens.addRWMap(pointer_tmp);
+		        		        		j++;
+		    		        			bool_punctuation = true;
+	    		        			}
+	    		        			
+	    		        		} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+	    		        		
+    		        		} else {
+    		        			
+    		        			if (tk.equals(",")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else if (tk.equals(";")) {
+    		        				bool_punctuation = false;
+	    		        			tokens.addRWMap(tk);
+    		        			} else {
+	        						tokens.addRWMap("undefined token");
+        							j++;
+	        						while(j < tokens.getTokenBuf(i).size()) {
+		        						tokens.addRWMap("skip token");
+	        							j++;
+	        						}
+	    		        		}
+    		        			
+    		        		}
+    					}
+    					
+        				break;
+        				
+    				// if
+        			case 5:
+        				break;
+        				
+    				// else 
+        			case 6:
+        				break;
+        				
+    				// elseif 
+        			case 7:
+        				break;
+        				
+    				// for 
+        			case 8:
+        				break;
+        				
+    				// while 
+        			case 9:
+        				break;
+        				
+    				// do 
+        			case 10:
+        				break;
+        				
+    				// return 
+        			case 11:
+        				break;
+        				
+    				// switch 
+        			case 12:
+        				break;
+        				
+    				// case 
+        			case 13:
+        				break;
+        				
+    				// printf 
+        			case 14:
+        				break;
+        				
+    				// scanf
+        			case 15:
+        				break;
+        				
+        			default:
+    			}
     	}
-    }	
-    
-//        		switch(token) {
-//	        		case "include":
-//	        			
-//	        			break;
-//	        		case "main":
-//	        			break;
-//	        		case "char":
-//	        			break;
-//	        		case "int":
-//	        			break;
-//	        		case "float":
-//	        			break;
-//	        		case "if":
-//	        			break;
-//	        		case "else":
-//	        			break;
-//	        		case "elseif":
-//	        			break;
-//	        		case "for":
-//	        			break;
-//	        		case "while":
-//	        			break;
-//	        		case "do":
-//	        			break;
-//	        		case "return":
-//	        			break;
-//	        		case "switch":
-//	        			break;
-//	        		case "case":
-//	        			break;
-//	        		case "printf":
-//	        			break;
-//	        		case "scanf":
-//	        			break;
-//        			default:
-//        		}
-//                
-//                
-//            }else {
-//            	System.out.println("no");
-//            }
+    }
 }
 
 //System.out.println(valueName.getClass().getSimpleName());		//取得變數的type
