@@ -5,7 +5,7 @@ public class Main {
     
 	public static void main(String[] args) {
 	    Scanner sc = new Scanner();
-//	    Token tokens = new Token();
+	    Token tokens = new Token();
 //	    tokens.setTokenClass();
 	    
         //輸入檔名
@@ -25,7 +25,7 @@ public class Main {
 //	    tokens.addRWMap("int");
 //	    tokens.addRWMap("int");
 //	    tokens.addRWMap("cout");
-//	    tokens.pRWMap();
+	    tokens.pRWMap();
 	}
 	
 }

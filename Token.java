@@ -8,8 +8,8 @@ public class Token{
 //	private static ArrayList<String> tokenClasses = new ArrayList<String>();
 //	private static ArrayList<String> reservedWord = new ArrayList<String>();
 	private static Map<String, Integer> reservedWord = new HashMap<>();
-//	Punctuation
-    public void setTokenClass() {
+
+//    public void setTokenClass() {
 //    	tokenClasses.add("ReservedWord");
 //    	tokenClasses.add("LibraryName");
 //    	tokenClasses.add("Identifier");
@@ -26,24 +26,7 @@ public class Token{
 //    	tokenClasses.add("Comment");
 //    	tokenClasses.add("UndefinedToken");
 //    	tokenClasses.add("SkippedToken");
-    	
-//    	reservedWord.add("include");
-//    	reservedWord.add("main");
-//    	reservedWord.add("char");
-//    	reservedWord.add("int");
-//    	reservedWord.add("float");
-//    	reservedWord.add("if");
-//    	reservedWord.add("else");
-//    	reservedWord.add("elseif");
-//    	reservedWord.add("for");
-//    	reservedWord.add("while");
-//    	reservedWord.add("do");
-//    	reservedWord.add("return");
-//    	reservedWord.add("switch");
-//    	reservedWord.add("case");
-//    	reservedWord.add("printf");
-//    	reservedWord.add("scanf");
-    }
+//    }
     
     // 新增值到ArrayList-tokenBuf
     public void addTokenBuf(ArrayList<String> token) {
