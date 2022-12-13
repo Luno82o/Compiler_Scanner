@@ -3,8 +3,8 @@ import java.util.HashMap;
 
 public class Token{
 	
-	private static Map<String, Integer> tokens = new HashMap<>();
-	private static int amount = 0;
+	private Map<String, Integer> tokens = new HashMap<>();
+	private int amount = 0;
 
     // 新增值到Map-tokens
     public void addMap(String token) {
@@ -17,6 +17,7 @@ public class Token{
     	}
 
     	System.out.println("addMap: "+token);
+    	addAmount();
     }
     
     // 印出Map-tokens
