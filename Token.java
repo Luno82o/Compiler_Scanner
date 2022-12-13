@@ -5,27 +5,27 @@ import java.util.HashMap;
 public class Token{
 	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
 	
-	private static ArrayList<String> tokenClasses = new ArrayList<String>();
+//	private static ArrayList<String> tokenClasses = new ArrayList<String>();
 //	private static ArrayList<String> reservedWord = new ArrayList<String>();
 	private static Map<String, Integer> reservedWord = new HashMap<>();
-	
+//	Punctuation
     public void setTokenClass() {
-    	tokenClasses.add("ReservedWord");
-    	tokenClasses.add("LibraryName");
-    	tokenClasses.add("Identifier");
-    	tokenClasses.add("Character");
-    	tokenClasses.add("Number");
-    	tokenClasses.add("Pointer");
-    	tokenClasses.add("Bracket");
-    	tokenClasses.add("Operator");
-    	tokenClasses.add("Comparator");
-    	tokenClasses.add("Address");
-    	tokenClasses.add("Punctuation");
-    	tokenClasses.add("FormatSpecifier");
-    	tokenClasses.add("PrintedToken");
-    	tokenClasses.add("Comment");
-    	tokenClasses.add("UndefinedToken");
-    	tokenClasses.add("SkippedToken");
+//    	tokenClasses.add("ReservedWord");
+//    	tokenClasses.add("LibraryName");
+//    	tokenClasses.add("Identifier");
+//    	tokenClasses.add("Character");
+//    	tokenClasses.add("Number");
+//    	tokenClasses.add("Pointer");
+//    	tokenClasses.add("Bracket");
+//    	tokenClasses.add("Operator");
+//    	tokenClasses.add("Comparator");
+//    	tokenClasses.add("Address");
+//    	tokenClasses.add("Punctuation");
+//    	tokenClasses.add("FormatSpecifier");
+//    	tokenClasses.add("PrintedToken");
+//    	tokenClasses.add("Comment");
+//    	tokenClasses.add("UndefinedToken");
+//    	tokenClasses.add("SkippedToken");
     	
 //    	reservedWord.add("include");
 //    	reservedWord.add("main");
@@ -52,12 +52,23 @@ public class Token{
 
     // 印出ArrayList-tokenBuf
     public void coutTokenBuf() {
-    	System.out.println(tokenBuf);
+    	for(int i=0 ; i<tokenBuf.size() ; i++)
+    		System.out.println(tokenBuf.get(i));
     }
 
     // 取得ArrayList-tokenBuf的第(x, y)位
-    public String getTokenBuf(int x, int y) {
+    public String getOneTokenBuf(int x, int y) {
     	return String.valueOf(tokenBuf.get(x).get(y));
+    }
+
+    // 取得ArrayList-tokenBuf的第(x)位
+    public ArrayList<String> getTokenBuf(int x) {
+    	return tokenBuf.get(x);
+    }
+    
+    // 取得ArrayList-tokenBuf的size
+    public int getTokenBufSize() {
+    	return tokenBuf.size();
     }
     
     // 新增值到Map-reservedWord

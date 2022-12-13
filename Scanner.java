@@ -75,7 +75,32 @@ public class Scanner {
         
     
     public void scan() {
-    	
+    	for(int i=0 ; i<tokens.getTokenBufSize() ; i++) {
+        	for(int j=0; j <tokens.getTokenBuf(i).size() ; j++) {
+        		
+//        		System.out.println(tokens.getOneTokenBuf(i, j));
+        		if(j==0) {
+        			switch(tokens.getOneTokenBuf(i, j)) {
+	        			case "#":
+	        	    		System.out.println(tokens.getOneTokenBuf(i, j+1));
+	        				if(tokens.getOneTokenBuf(i, j+1)=="include") {
+	        					includeType(tokens.getTokenBuf(i));
+	        				}
+	        				break;
+        			}
+        			
+        		}
+        	}
+    	}
+    }	
+    
+    public void includeType(ArrayList<String> tokens) {
+//    	String regex1 = "include";
+//    	Pattern pattern1 = Pattern.compile(regex1, Pattern.CASE_INSENSITIVE);
+    	for(int i=2 ; i<=6 ; i++) {
+    		tokens.get(i);
+    		System.out.println(tokens.get(i));
+    	}
     }
 //        		switch(token) {
 //	        		case "include":
