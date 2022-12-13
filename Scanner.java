@@ -255,7 +255,6 @@ public class Scanner {
         				bool_punctuation = false;
     					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
     						String tk = getOneTokenBuf(i, j); 
-//    		        		if(tk == "") continue;
     		        		if (!bool_punctuation) {
 
         		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
