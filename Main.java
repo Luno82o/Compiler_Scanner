@@ -17,18 +17,6 @@ public class Main {
 	    sc.readTxt(filename);
 	    sc.scan();
 	    sc.pAllMap();
-
-//	    main2("aaa", "bbb");
-//	    main2("ccc", "ddd");
 	}
 	
-//	public static Token identifier = new Token();
-//	public static Token character = new Token();
-//	public static void main2(String a, String b) {
-//
-//	    identifier.addMap(a);
-//	    character.addMap(b);
-//	    identifier.pMap();
-//	    character.pMap();
-//	}
 }
