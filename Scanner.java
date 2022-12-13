@@ -112,6 +112,43 @@ public class Scanner {
     }
     
     
+    public void pAllMap() {
+		System.out.println("reservedWord:");
+    	reservedWord.pMap();
+		System.out.println("libraryName:");
+    	libraryName.pMap();
+		System.out.println("identifier:");
+    	identifier.pMap();
+		System.out.println("character:");
+    	character.pMap();
+		System.out.println("number:");
+    	number.pMap();
+		System.out.println("pointer:");
+    	pointer.pMap();
+		System.out.println("bracket:");
+    	bracket.pMap();
+		System.out.println("operator:");
+    	operator.pMap();
+		System.out.println("comparator:");
+    	comparator.pMap();
+		System.out.println("address:");
+    	address.pMap();
+		System.out.println("punctuation:");
+    	punctuation.pMap();
+		System.out.println("formatSpecifier:");
+    	formatSpecifier.pMap();
+		System.out.println("printedToken:");
+    	printedToken.pMap();
+		System.out.println("comment:");
+    	comment.pMap();
+		System.out.println("undefinedToken:");
+    	undefinedToken.pMap();
+		System.out.println("skippedToken:");
+    	skippedToken.pMap();
+    	
+    }
+    
+    
     Pattern ptn_hashtag  = Pattern.compile("#"); 
     Pattern ptn_include = Pattern.compile("include", Pattern.CASE_INSENSITIVE); 
     Pattern ptn_libname = Pattern.compile("(<)([a-zA-Z]+)(.h>)"); 

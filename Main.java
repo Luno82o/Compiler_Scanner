@@ -16,6 +16,7 @@ public class Main {
         
 	    sc.readTxt(filename);
 	    sc.scan();
+	    sc.pAllMap();
 
 //	    main2("aaa", "bbb");
 //	    main2("ccc", "ddd");
