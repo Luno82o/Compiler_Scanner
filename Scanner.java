@@ -236,11 +236,15 @@ public class Scanner {
     				// #
         			case 0:
         				punctuation.addMap(tkn_tmp);
+						System.out.println("token "+tkn_tmp+" belongs to punctuation");
         				// 判斷#後面是否為include
         				String include_tmp = getOneTokenBuf(i, 1);
         				Matcher mat_include = ptn_include.matcher(include_tmp);
         				
         				if(mat_include.matches()) {
+    						reservedWord.addMap("include");
+    						System.out.println("token include belongs to reserved word");
+
         					// 合併<xxx.h>
         					String library_tmp = "";
         					for(int k=2 ; k<=6 ; k++)
@@ -251,20 +255,43 @@ public class Scanner {
         					if(mat_libname.matches()) {
         						
         						// token格式為:#include<xxx.h>
-        						reservedWord.addMap("include");
         						libraryName.addMap(library_tmp);
-        					} else {
-        						undefinedToken.addMap(tokenBuf.get(i).get(2));
+        						System.out.println("token "+library_tmp+" belongs to library name");
+        					} else {	
+        						comparator.addMap(tokenBuf.get(i).get(2));
+        						System.out.println("token "+tokenBuf.get(i).get(2)+" belongs to comparator");
+
+        						String undefinedTokens = "";
         						String skipTokens = "";
         						int j = 3;
+        						while(j < 6 && j < tokenBuf_space.get(i).size()) {
+        							undefinedTokens = undefinedTokens + tokenBuf_space.get(i).get(j);
+        							j++;
+        						}
+        						undefinedToken.addMap(undefinedTokens);
+        						System.out.println("token "+undefinedTokens+" belongs to undefined token");
         						while(j < tokenBuf_space.get(i).size()) {
-            						skipTokens = skipTokens + tokenBuf.get(i).get(j);
+            						skipTokens = skipTokens + tokenBuf_space.get(i).get(j);
         							j++;
         						}
         						skippedToken.addMap(skipTokens);
+        						System.out.println("token "+skipTokens+" belongs to skipped token");
         					}
         				} else {
         					undefinedToken.addMap(include_tmp);
+    						String undefinedTokens = "";
+    						String skipTokens = "";
+							undefinedTokens = tokenBuf.get(i).get(2);
+    						undefinedToken.addMap(undefinedTokens);
+    						System.out.println("token "+undefinedTokens+" belongs to undefined token");
+    						
+    						int j = 3;
+    						while(j < tokenBuf_space.get(i).size()) {
+        						skipTokens = skipTokens + tokenBuf_space.get(i).get(j);
+    							j++;
+    						}
+    						skippedToken.addMap(skipTokens);
+    						System.out.println("token "+skipTokens+" belongs to skipped token");
         				}
         				break;
         				
