@@ -3,9 +3,27 @@ import java.util.*;
 import java.util.regex.*; 
 
 public class Scanner {
-//	static ArrayList<String> tokenBuf = new ArrayList<String>();
+	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
+
     Token tokens = new Token();
-	 
+    Token reservedWord = new Token();
+    Token libraryName = new Token();
+    Token identifier = new Token();
+    Token character = new Token();
+    Token number = new Token();
+    Token pointer = new Token();
+    Token bracket = new Token();
+    Token operator = new Token();
+    Token comparator = new Token();
+    Token address = new Token();
+    Token punctuation = new Token();
+    Token formatSpecifier = new Token();
+    Token printedToken = new Token();
+    Token comment = new Token();
+    Token undefinedToken = new Token();
+    Token SkippedToken = new Token();
+    
+    
     public void readTxt(String filename) {        
         try {
             //讀取檔案
@@ -70,10 +88,36 @@ public class Scanner {
         	}
 
         }
-		tokens.addTokenBuf(tokensTmp);
+		addTokenBuf(tokensTmp);
 		System.out.println(tokensTmp);
     }    
+    
+    // 新增值到ArrayList-tokenBuf
+    public void addTokenBuf(ArrayList<String> token) {
+    	tokenBuf.add(token);
+    }
 
+    // 印出ArrayList-tokenBuf
+    public void coutTokenBuf() {
+    	for(int i=0 ; i<tokenBuf.size() ; i++)
+    		System.out.println(tokenBuf.get(i));
+    }
+
+    // 取得ArrayList-tokenBuf的第(x, y)位
+    public String getOneTokenBuf(int x, int y) {
+    	return String.valueOf(tokenBuf.get(x).get(y));
+    }
+
+    // 取得ArrayList-tokenBuf的第(x)位
+    public ArrayList<String> getTokenBuf(int x) {
+    	return tokenBuf.get(x);
+    }
+    
+    // 取得ArrayList-tokenBuf的size
+    public int getTokenBufSize() {
+    	return tokenBuf.size();
+    }
+    
     Pattern ptn_hashtag  = Pattern.compile("#", Pattern.CASE_INSENSITIVE); 
     Pattern ptn_include = Pattern.compile("include", Pattern.CASE_INSENSITIVE); 
     Pattern ptn_libname = Pattern.compile("(<)([a-zA-Z]+)(.h>)", Pattern.CASE_INSENSITIVE); 
@@ -106,9 +150,9 @@ public class Scanner {
 		
 		boolean bool_punctuation = false;
 		
-    	for(int i=0 ; i<tokens.getTokenBufSize() ; i++) {
+    	for(int i=0 ; i<getTokenBufSize() ; i++) {
         		
-    		String tkn_tmp		= tokens.getOneTokenBuf(i, 0);
+    		String tkn_tmp		= getOneTokenBuf(i, 0);
     		Matcher mat_hashtag	= ptn_hashtag.matcher(tkn_tmp);
     		Matcher mat_main	= ptn_main.matcher(tkn_tmp);
     		Matcher mat_char	= ptn_char.matcher(tkn_tmp);
@@ -166,28 +210,28 @@ public class Scanner {
     			
     				// #
         			case 0:
-						tokens.addRWMap(tkn_tmp);
+						tokens.addMap(tkn_tmp);
         				// 判斷#後面是否為include
-        				Matcher mat_include = ptn_include.matcher(tokens.getOneTokenBuf(i, 1));
+        				Matcher mat_include = ptn_include.matcher(getOneTokenBuf(i, 1));
         				
         				if(mat_include.matches()) {
         					// 合併<xxx.h>
         					String library_tmp = "";
         					for(int k=2 ; k<=6 ; k++)
-        						library_tmp = library_tmp + tokens.getTokenBuf(i).get(k);
+        						library_tmp = library_tmp + getTokenBuf(i).get(k);
         					
         					// 判斷#include後面是否為<xxx.h>
         					Matcher mat_libname = ptn_libname.matcher(library_tmp);
         					if(mat_libname.matches()) {
         						
         						// token格式為:#include<xxx.h>
-        						tokens.addRWMap("include");
-        						tokens.addRWMap(library_tmp);
+        						tokens.addMap("include");
+        						tokens.addMap(library_tmp);
         					} else {
-        						tokens.addRWMap("notmatch");
+        						tokens.addMap("notmatch");
         					}
         				} else {
-    						tokens.addRWMap("notmatch");
+    						tokens.addMap("notmatch");
         				}
         				break;
         				
@@ -197,35 +241,35 @@ public class Scanner {
         				
         			// char
         			case 2:
-						tokens.addRWMap(tkn_tmp);
+						tokens.addMap(tkn_tmp);
         				bool_punctuation = false;
-    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
-    						String tk = tokens.getOneTokenBuf(i, j); 
+    					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
+    						String tk = getOneTokenBuf(i, j); 
     		        		
     		        		if (!bool_punctuation) {
 
         		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
 	    		        		if (mat_identifier.matches()) {
 	    		        			
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
 	    		        			bool_punctuation = true;
 	    		        			
 	    		        		} else if (tk.equals("*")) {
 	    		        			
-	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
 	    		        			if(mat_identifi.matches()) {
 		    		        			String pointer_tmp = "";
-	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
-		    		        			tokens.addRWMap(pointer_tmp);
+	            						pointer_tmp = tk + getOneTokenBuf(i, j+1);
+		    		        			tokens.addMap(pointer_tmp);
 		        		        		j++;
 		    		        			bool_punctuation = true;
 	    		        			}
 	    		        			
 	    		        		} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}
@@ -234,15 +278,15 @@ public class Scanner {
     		        			
     		        			if (tk.equals(",")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else if (tk.equals(";")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}
@@ -253,35 +297,35 @@ public class Scanner {
         				
         			// int
         			case 3:
-						tokens.addRWMap(tkn_tmp);
+						tokens.addMap(tkn_tmp);
         				bool_punctuation = false;
-    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
-    						String tk = tokens.getOneTokenBuf(i, j); 
+    					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
+    						String tk = getOneTokenBuf(i, j); 
     		        		
     		        		if (!bool_punctuation) {
 
         		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
         		        		if (mat_identifier.matches()) {
 	    		        			
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
 	    		        			bool_punctuation = true;
 	    		        			
 	    		        		} else if (tk.equals("*")) {
 	    		        			
-	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
 	    		        			if(mat_identifi.matches()) {
 		    		        			String pointer_tmp = "";
-	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
-		    		        			tokens.addRWMap(pointer_tmp);
+	            						pointer_tmp = tk + getOneTokenBuf(i, j+1);
+		    		        			tokens.addMap(pointer_tmp);
 		        		        		j++;
 		    		        			bool_punctuation = true;
 	    		        			}
 	    		        			
 	    		        		} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}
@@ -290,15 +334,15 @@ public class Scanner {
     		        			
     		        			if (tk.equals(",")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else if (tk.equals(";")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}
@@ -310,35 +354,35 @@ public class Scanner {
         				
     				// float
         			case 4:
-						tokens.addRWMap(tkn_tmp);
+						tokens.addMap(tkn_tmp);
         				bool_punctuation = false;
-    					for(int j=1 ; j<tokens.getTokenBuf(i).size() ; j++) {
-    						String tk = tokens.getOneTokenBuf(i, j); 
+    					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
+    						String tk = getOneTokenBuf(i, j); 
     		        		
     		        		if (!bool_punctuation) {
 
         		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
         		        		if (mat_identifier.matches()) {
 	    		        			
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
 	    		        			bool_punctuation = true;
 	    		        			
 	    		        		} else if (tk.equals("*")) {
 	    		        			
-	        		        		Matcher mat_identifi = ptn_identifier.matcher(tokens.getOneTokenBuf(i, j+1));
+	        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
 	    		        			if(mat_identifi.matches()) {
 		    		        			String pointer_tmp = "";
-	            						pointer_tmp = tk + tokens.getOneTokenBuf(i, j+1);
-		    		        			tokens.addRWMap(pointer_tmp);
+	            						pointer_tmp = tk + getOneTokenBuf(i, j+1);
+		    		        			tokens.addMap(pointer_tmp);
 		        		        		j++;
 		    		        			bool_punctuation = true;
 	    		        			}
 	    		        			
 	    		        		} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}
@@ -347,15 +391,15 @@ public class Scanner {
     		        			
     		        			if (tk.equals(",")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else if (tk.equals(";")) {
     		        				bool_punctuation = false;
-	    		        			tokens.addRWMap(tk);
+	    		        			tokens.addMap(tk);
     		        			} else {
-	        						tokens.addRWMap("undefined token");
+	        						tokens.addMap("undefined token");
         							j++;
-	        						while(j < tokens.getTokenBuf(i).size()) {
-		        						tokens.addRWMap("skip token");
+	        						while(j < getTokenBuf(i).size()) {
+		        						tokens.addMap("skip token");
 	        							j++;
 	        						}
 	    		        		}

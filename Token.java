@@ -3,73 +3,29 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Token{
-	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
+//	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
 	
-//	private static ArrayList<String> tokenClasses = new ArrayList<String>();
-//	private static ArrayList<String> reservedWord = new ArrayList<String>();
-	private static Map<String, Integer> reservedWord = new HashMap<>();
+	private static Map<String, Integer> tokens = new HashMap<>();
+	private static int amount = 0;
 
-//    public void setTokenClass() {
-//    	tokenClasses.add("ReservedWord");
-//    	tokenClasses.add("LibraryName");
-//    	tokenClasses.add("Identifier");
-//    	tokenClasses.add("Character");
-//    	tokenClasses.add("Number");
-//    	tokenClasses.add("Pointer");
-//    	tokenClasses.add("Bracket");
-//    	tokenClasses.add("Operator");
-//    	tokenClasses.add("Comparator");
-//    	tokenClasses.add("Address");
-//    	tokenClasses.add("Punctuation");
-//    	tokenClasses.add("FormatSpecifier");
-//    	tokenClasses.add("PrintedToken");
-//    	tokenClasses.add("Comment");
-//    	tokenClasses.add("UndefinedToken");
-//    	tokenClasses.add("SkippedToken");
-//    }
+
     
-    // 新增值到ArrayList-tokenBuf
-    public void addTokenBuf(ArrayList<String> token) {
-    	tokenBuf.add(token);
-    }
-
-    // 印出ArrayList-tokenBuf
-    public void coutTokenBuf() {
-    	for(int i=0 ; i<tokenBuf.size() ; i++)
-    		System.out.println(tokenBuf.get(i));
-    }
-
-    // 取得ArrayList-tokenBuf的第(x, y)位
-    public String getOneTokenBuf(int x, int y) {
-    	return String.valueOf(tokenBuf.get(x).get(y));
-    }
-
-    // 取得ArrayList-tokenBuf的第(x)位
-    public ArrayList<String> getTokenBuf(int x) {
-    	return tokenBuf.get(x);
-    }
-    
-    // 取得ArrayList-tokenBuf的size
-    public int getTokenBufSize() {
-    	return tokenBuf.size();
-    }
-    
-    // 新增值到Map-reservedWord
-    public void addRWMap(String token) {
-    	if(reservedWord.containsKey(token)) {
-    		int timeTmp = reservedWord.get(token);
+    // 新增值到Map-tokens
+    public void addMap(String token) {
+    	if(tokens.containsKey(token)) {
+    		int timeTmp = tokens.get(token);
     		timeTmp++;
-    		reservedWord.replace(token, timeTmp);
+    		tokens.replace(token, timeTmp);
     	} else {
-    		reservedWord.put(token, 1);
+    		tokens.put(token, 1);
     	}
 
     	System.out.println("addRWMap: "+token);
     }
     
     // 印出Map-reservedWord
-    public void pRWMap() {
-    	System.out.println(reservedWord);
+    public void pMap() {
+    	System.out.println(tokens);
     }
 } 
 

@@ -18,14 +18,7 @@ public class Main {
         
 	    sc.readTxt(filename);
 	    sc.scan();
-	    //test
-//	    tokens.coutTokenBuf();
-//	    String tmp = tokens.getTokenBuf(1, 2);
-//        System.out.print(tmp);
-//	    tokens.addRWMap("int");
-//	    tokens.addRWMap("int");
-//	    tokens.addRWMap("cout");
-	    tokens.pRWMap();
+	    tokens.pMap();
 	    sc.test();
 
 	}
