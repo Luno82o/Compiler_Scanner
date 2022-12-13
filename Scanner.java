@@ -4,6 +4,7 @@ import java.util.regex.*;
 
 public class Scanner {
 	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
+	private static ArrayList<ArrayList<String>> tokenBuf_space = new ArrayList<>(2);
 
     Token tokens = new Token();
     Token reservedWord = new Token();
@@ -21,7 +22,7 @@ public class Scanner {
     Token printedToken = new Token();
     Token comment = new Token();
     Token undefinedToken = new Token();
-    Token SkippedToken = new Token();
+    Token skippedToken = new Token();
     
     
     public void readTxt(String filename) {        
@@ -48,6 +49,7 @@ public class Scanner {
     
     public void splitToken(String inputLine) {
     	ArrayList<String> tokensTmp = new ArrayList<String>();
+    	ArrayList<String> tokensTmp_space = new ArrayList<String>();
     	int token_start = 0, token_end = 0;
 //        System.out.println("inputLine.length: "+inputLine.length());
 
@@ -67,10 +69,10 @@ public class Scanner {
         	if(token_end == token_start) {
                 char buf;
                 buf = inputLine.charAt(token_start);
-                
-            	if(buf!=' ') {
+
+            	if(buf!=' ')
     	            tokensTmp.add(Character.toString(buf));
-            	}
+                tokensTmp_space.add(Character.toString(buf));
             	
 	            token_start++;
         	} else if (i == inputLine.length()) {
@@ -79,22 +81,30 @@ public class Scanner {
 	            char buf[] = new char[i-token_start];
 	            inputLine.getChars(token_start, i, buf, 0);
 	            tokensTmp.add(String.valueOf(buf));
+                tokensTmp_space.add(String.valueOf(buf));
 	            token_start = i;
         	} else {
 	            char buf[] = new char[token_end-token_start];
 	            inputLine.getChars(token_start, token_end, buf, 0);
 	            tokensTmp.add(String.valueOf(buf));
+                tokensTmp_space.add(String.valueOf(buf));
 	            token_start = token_end;
         	}
 
         }
 		addTokenBuf(tokensTmp);
+		addTokenBufSpace(tokensTmp_space);
 		System.out.println(tokensTmp);
     }    
-    
+
     // 新增值到ArrayList-tokenBuf
     public void addTokenBuf(ArrayList<String> token) {
     	tokenBuf.add(token);
+    }
+
+    // 新增值到ArrayList-tokenBuf_space
+    public void addTokenBufSpace(ArrayList<String> token) {
+    	tokenBuf_space.add(token);
     }
 
     // 印出ArrayList-tokenBuf
@@ -245,7 +255,7 @@ public class Scanner {
         				bool_punctuation = false;
     					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
     						String tk = getOneTokenBuf(i, j); 
-    		        		
+//    		        		if(tk == "") continue;
     		        		if (!bool_punctuation) {
 
         		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
@@ -301,6 +311,7 @@ public class Scanner {
         				bool_punctuation = false;
     					for(int j=1 ; j<getTokenBuf(i).size() ; j++) {
     						String tk = getOneTokenBuf(i, j); 
+    		        		if(tk ==" ") break;
     		        		
     		        		if (!bool_punctuation) {
 
