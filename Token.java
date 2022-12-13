@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Token{
-	private static ArrayList<ArrayList> tokenBuf = new ArrayList<ArrayList>();
+	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
 	
 	private static ArrayList<String> tokenClasses = new ArrayList<String>();
 	private static ArrayList<String> reservedWord = new ArrayList<String>();
