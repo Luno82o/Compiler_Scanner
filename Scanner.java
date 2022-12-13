@@ -32,46 +32,49 @@ public class Scanner {
     	int token_start = 0, token_end = 0;
 //        System.out.println("inputLine.length: "+inputLine.length());
     
+    	// 
         while(token_start < inputLine.length()) {
-            for(int i = token_start; i < inputLine.length(); i++) {
-//            	System.out.println(inputLine.charAt(i));
-//            	System.out.println("i = "+i);
+         
+        	int i;
+            for(i = token_start; i < inputLine.length(); i++) {
             	
             	if(!Character.isLetterOrDigit(inputLine.charAt(i))) {
             		token_end = i;
             		break;
             	}
             }
-
 //        	System.out.println("token_start:"+token_start);
 //        	System.out.println("token_end:"+token_end);
         	
-        	if(token_end-token_start == 0) {
+        	if(token_end == token_start) {
                 char buf;
                 buf = inputLine.charAt(token_start);
                 
             	if(buf!=' ') {
-//            		System.out.println(buf);
-
     	            tokensTmp.add(Character.toString(buf));
-//            		tokens.addTokenBuf(Character.toString(buf));
             	}
-	            token_start = token_end + 1;
-        	} else {
-	            char buf[] = new char[(token_end-token_start) + 1];
-	            inputLine.getChars(token_start, token_end, buf, 0);
-//	            System.out.println(buf);
+            	
+	            token_start++;
+        	} else if (i == inputLine.length()) {
+            	token_end = i-1;
 
+	            char buf[] = new char[i-token_start];
+	            inputLine.getChars(token_start, i, buf, 0);
+	            tokensTmp.add(String.valueOf(buf));
+	            token_start = i;
+        	} else {
+	            char buf[] = new char[token_end-token_start];
+	            inputLine.getChars(token_start, token_end, buf, 0);
 	            tokensTmp.add(String.valueOf(buf));
 	            token_start = token_end;
         	}
+
         }
-    	System.out.println(tokensTmp);
 		tokens.addTokenBuf(tokensTmp);
     }    
         
     
-    public void splitToken() {
+    public void scan() {
     	
     }
 //        		switch(token) {

@@ -17,10 +17,15 @@ public class Main {
         String filename = "test.txt";
         
 	    sc.readTxt(filename);
-	    tokens.coutTokenBuf();
 	    
-	    String tmp = tokens.getTokenBuf(1, 2);
-        System.out.print(tmp);
+	    //test
+	    tokens.coutTokenBuf();
+//	    String tmp = tokens.getTokenBuf(1, 2);
+//        System.out.print(tmp);
+	    tokens.addRWMap("int");
+	    tokens.addRWMap("int");
+	    tokens.addRWMap("cout");
+	    tokens.pRWMap();
 	}
 	
 }
