@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<st12dio.h>
 int i, k, m, *id;
 for (i = 1; i < 10; i++) {
 k = k + i;
