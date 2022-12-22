@@ -12,7 +12,7 @@ public class Main {
 //        java.util.Scanner input = new java.util.Scanner(System.in);
 //        String filename = input.nextLine();
 //        input.close();
-        String filename = "test.txt";
+        String filename = "test2.txt";
         
 	    sc.readTxt(filename);
 	    sc.scan();
