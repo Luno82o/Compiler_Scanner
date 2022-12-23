@@ -52,10 +52,8 @@ public class Scanner {
     	ArrayList<String> tokensTmp = new ArrayList<String>();
     	ArrayList<String> tokensTmp_space = new ArrayList<String>();
     	int token_start = 0, token_end = 0;
-//        System.out.println("inputLine.length: "+inputLine.length());
 
         while(token_start < inputLine.length()) {
-         
         	int i;
             for(i = token_start; i < inputLine.length(); i++) {
             	
@@ -64,8 +62,6 @@ public class Scanner {
             		break;
             	}
             }
-//        	System.out.println("token_start:"+token_start);
-//        	System.out.println("token_end:"+token_end);
         	
         	if(token_end == token_start) {
                 char buf;
@@ -184,37 +180,69 @@ public class Scanner {
 	        			state = 0;
         				punctuation.addMap(tkn);
 						System.out.println("token "+tkn+" belongs to punctuation");
+						
 	        		}
-	        		else if(compareString("main", tkn))
+	        		else if(compareString("main", tkn)) {
 	        			state = 1;
-	        		else if(compareString("char", tkn)) 
+	        			
+	        		}
+	        		else if(compareString("char", tkn)) {
 	        			state = 2;
+        				bool_punctuation = false;
+	        			reservedWord.addMap(tkn);
+						System.out.println("token "+tkn+" belongs to reserved word");
+						
+	        		}
 	        		else if(compareString("int", tkn)) {
 	        			state = 3;
         				bool_punctuation = false;
 	        			reservedWord.addMap(tkn);
 						System.out.println("token "+tkn+" belongs to reserved word");
+						
 	        		}
-	        		else if(compareString("float", tkn))
+	        		else if(compareString("float", tkn)) {
 	        			state = 4;
-	        		else if(compareString("if", tkn))
+        				bool_punctuation = false;
+	        			reservedWord.addMap(tkn);
+						System.out.println("token "+tkn+" belongs to reserved word");
+						
+	        		}
+	        		else if(compareString("if", tkn)) {
 	        			state = 5;
-	        		else if(compareString("for", tkn)) 
+	        			
+	        		}
+	        		else if(compareString("for", tkn))  {
 	        			state = 6;
-	        		else if(compareString("while", tkn))
+	        			
+	        		}
+	        		else if(compareString("while", tkn))  {
 	        			state = 7;
-	        		else if(compareString("do", tkn))
+	        			
+	        		}
+	        		else if(compareString("do", tkn))  {
 	    				state = 8;
-	    			else if(compareString("return", tkn))
+	    				
+	        		}
+	    			else if(compareString("return", tkn))  {
+
 	    				state = 9;
-	    			else if(compareString("switch", tkn))
+	    			}
+	    			else if(compareString("switch", tkn))  {
+
 	    				state = 10;
-	    	        else if(compareString("case", tkn))
+	    			}
+	    	        else if(compareString("case", tkn))  {
+
 	    	        	state = 11;
-	    	        else if(compareString("printf", tkn)) 
+	    	        }
+	    	        else if(compareString("printf", tkn))   {
+
 	    	        	state = 12;
-	    	        else if(compareString("scanf", tkn))
+	    	        }
+	    	        else if(compareString("scanf", tkn))  {
+
 	    	        	state = 13;
+	    	        }
 	    	        else 
 	    	        	state = 14;
 	        		continue;
@@ -248,8 +276,6 @@ public class Scanner {
         						
         						// 結束換下一行
         						bool_endLine = true;
-//        						i++;
-//        						j=0;
         					} else {
         						// library格式不正確
         						comparator.addMap(tkn);
@@ -276,8 +302,6 @@ public class Scanner {
 
         						// 結束換下一行
         						bool_endLine = true;
-//        						i++;
-//        						j=0;
         					}
         				} else {
         					undefinedToken.addMap(include_tmp);
@@ -297,67 +321,60 @@ public class Scanner {
     						
     						// 結束換下一行
     						bool_endLine = true;
-//    						i++;
-//    						j=0;
         				}
         				break;
         				
     				// main
         			case 1:
         				break;
-//        				
-//        			// char
-//        			case 2:
-//						tokens.addMap(tkn);
-//        				bool_punctuation = false;
-//    					for(int j=1 ; j<tokenBuf.get(i).size() ; j++) {
-//    						String tk = getOneTokenBuf(i, j); 
-//    		        		if (!bool_punctuation) {
-//
-//        		        		Matcher mat_identifier = ptn_identifier.matcher(tk);
-//	    		        		if (mat_identifier.matches()) {
-//	    		        			
-//	    		        			tokens.addMap(tk);
-//	    		        			bool_punctuation = true;
-//	    		        			
-//	    		        		} else if (tk.equals("*")) {
-//	    		        			
-//	        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
-//	    		        			if(mat_identifi.matches()) {
-//		    		        			String pointer_tmp = "";
-//	            						pointer_tmp = tk + getOneTokenBuf(i, j+1);
-//		    		        			tokens.addMap(pointer_tmp);
-//		        		        		j++;
-//		    		        			bool_punctuation = true;
-//	    		        			}
-//	    		        			
-//	    		        		} else {
-//	        						tokens.addMap("undefined token");
-//        							j++;
-//	        						while(j < tokenBuf.get(i).size()) {
-//		        						tokens.addMap("skip token");
-//	        							j++;
-//	        						}
-//	    		        		}
-//	    		        		
-//    		        		} else {
-//    		        			
-//    		        			if (tk.equals(",") || tk.equals(";")) {
-//    		        				bool_punctuation = false;
-//	    		        			tokens.addMap(tk);
-//    		        			} else {
-//	        						tokens.addMap("undefined token");
-//        							j++;
-//	        						while(j < tokenBuf.get(i).size()) {
-//		        						tokens.addMap("skip token");
-//	        							j++;
-//	        						}
-//	    		        		}
-//    		        			
-//    		        		}
-//    					}
-//        				break;
-//        				
+        				
+        			// char
+        			case 2:
+
+		        		if (!bool_punctuation) {
+
+    		        		Matcher mat_identifier = ptn_identifier.matcher(tkn);
+    		        		if (mat_identifier.matches()) {
+    		        			
+    		        			identifier.addMap(tkn);
+    		        			bool_punctuation = true;
+    		        			
+    		        		} else if (tkn.equals("*")) {
+    		        			
+        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
+    		        			if(mat_identifi.matches()) {
+	    		        			String pointer_tmp = "";
+            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						identifier.addMap(pointer_tmp);
+	    		        			bool_punctuation = true;
+    		        			}
+    		        			
+    		        		} else {
+    		        			undefinedToken.addMap(tkn);
+        						while((j+1) < tokenBuf.get(i).size()) {
+	        						tokens.addMap("skip token");
+	        						j++;
+        						}
+    		        		}
+    		        		
+		        		} else if(tkn.equals(",")){
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+		        			
+		        		} else if(tkn.equals(";")) {
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+	        				bool_endLine = true;
+	        				
+		        		} else {
+		        			undefinedToken.addMap(tkn);
+    						while((j+1) < tokenBuf.get(i).size()) {
+    							skippedToken.addMap("skip token");
+        						j++;
+    						}
+		        		}
+        				break;
+        				
         			// int
         			case 3:
 		        		if (!bool_punctuation) {
@@ -373,7 +390,7 @@ public class Scanner {
         		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
     		        			if(mat_identifi.matches()) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, j+1);
+            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
             						identifier.addMap(pointer_tmp);
 	    		        			bool_punctuation = true;
     		        			}
@@ -386,17 +403,21 @@ public class Scanner {
         						}
     		        		}
     		        		
+		        		} else if(tkn.equals(",")){
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+		        			
+		        		} else if(tkn.equals(";")) {
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+	        				bool_endLine = true;
+	        				
 		        		} else {
-		        			if (tkn.equals(",") || tkn.equals(";")) {
-		        				bool_punctuation = false;
-		        				punctuation.addMap(tkn);
-		        			} else {
-    		        			undefinedToken.addMap(tkn);
-        						while((j+1) < tokenBuf.get(i).size()) {
-	        						tokens.addMap("skip token");
-	        						j++;
-        						}
-    		        		}
+		        			undefinedToken.addMap(tkn);
+    						while((j+1) < tokenBuf.get(i).size()) {
+    							skippedToken.addMap("skip token");
+        						j++;
+    						}
 		        		}
         				break;
         				
@@ -415,7 +436,7 @@ public class Scanner {
         		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
     		        			if(mat_identifi.matches()) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, j+1);
+            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
             						identifier.addMap(pointer_tmp);
 	    		        			bool_punctuation = true;
     		        			}
@@ -428,17 +449,21 @@ public class Scanner {
         						}
     		        		}
     		        		
+		        		} else if(tkn.equals(",")){
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+		        			
+		        		} else if(tkn.equals(";")) {
+	        				bool_punctuation = false;
+	        				punctuation.addMap(tkn);
+	        				bool_endLine = true;
+	        				
 		        		} else {
-		        			if (tkn.equals(",") || tkn.equals(";")) {
-		        				bool_punctuation = false;
-		        				punctuation.addMap(tkn);
-		        			} else {
-    		        			undefinedToken.addMap(tkn);
-        						while((j+1) < tokenBuf.get(i).size()) {
-	        						tokens.addMap("skip token");
-	        						j++;
-        						}
-    		        		}
+		        			undefinedToken.addMap(tkn);
+    						while((j+1) < tokenBuf.get(i).size()) {
+    							skippedToken.addMap("skip token");
+        						j++;
+    						}
 		        		}
         				break;
         				
@@ -480,7 +505,6 @@ public class Scanner {
         				
         			default:
     			}
-    			if(bool_endLine)break;
     		}
     	}
     }
