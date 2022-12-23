@@ -6,8 +6,6 @@ public class Scanner {
 	private static ArrayList<ArrayList<String>> tokenBuf = new ArrayList<>(2);
 	private static ArrayList<ArrayList<String>> tokenBuf_space = new ArrayList<>(2);
 
-	private static Token tokens = new Token();
-	
 	private static Token reservedWord = new Token();
 	private static Token libraryName = new Token();
 	private static Token identifier = new Token();
@@ -36,7 +34,7 @@ public class Scanner {
             //逐行讀取
             while (br.ready()) {
             	inputLine = br.readLine();
-            	System.out.println(inputLine);
+//            	System.out.println(inputLine);
             	splitToken(inputLine);
             }
             
@@ -89,75 +87,18 @@ public class Scanner {
         	}
 
         }
-        tokenBuf.add(tokensTmp);
+        tokenBuf.add(tokensTmp_space);
 		tokenBuf_space.add(tokensTmp_space);
-		System.out.println(tokensTmp);
+		System.out.println(tokensTmp_space);
     }
 
-    
-    // 印出ArrayList-tokenBuf
-    public void coutTokenBuf() {
-    	for(int i=0 ; i<tokenBuf.size() ; i++)
-    		System.out.println(tokenBuf.get(i));
-    }
-
-    
-    // 取得ArrayList-tokenBuf的第(x, y)位
-    public String getOneTokenBuf(int x, int y) {
-    	return String.valueOf(tokenBuf.get(x).get(y));
-    }
-    
-    
-    public void pAllMap() {
-		System.out.println("reservedWord:");
-    	reservedWord.pMap();
-		System.out.println("libraryName:");
-    	libraryName.pMap();
-		System.out.println("identifier:");
-    	identifier.pMap();
-		System.out.println("character:");
-    	character.pMap();
-		System.out.println("number:");
-    	number.pMap();
-		System.out.println("pointer:");
-    	pointer.pMap();
-		System.out.println("bracket:");
-    	bracket.pMap();
-		System.out.println("operator:");
-    	operator.pMap();
-		System.out.println("comparator:");
-    	comparator.pMap();
-		System.out.println("address:");
-    	address.pMap();
-		System.out.println("punctuation:");
-    	punctuation.pMap();
-		System.out.println("formatSpecifier:");
-    	formatSpecifier.pMap();
-		System.out.println("printedToken:");
-    	printedToken.pMap();
-		System.out.println("comment:");
-    	comment.pMap();
-		System.out.println("undefinedToken:");
-    	undefinedToken.pMap();
-		System.out.println("skippedToken:");
-    	skippedToken.pMap();
-    	
-    }
      
-    Pattern ptn_else = Pattern.compile("else", Pattern.CASE_INSENSITIVE); 
-    Pattern ptn_elseif = Pattern.compile("elseif", Pattern.CASE_INSENSITIVE); 
+//    Pattern ptn_else = Pattern.compile("else", Pattern.CASE_INSENSITIVE); 
+//    Pattern ptn_elseif = Pattern.compile("elseif", Pattern.CASE_INSENSITIVE); 
     
     Pattern ptn_libname = Pattern.compile("(<)([a-zA-Z]+)(.h>)"); 
     Pattern ptn_identifier = Pattern.compile("([a-zA-Z])([a-zA-Z0-9]*)"); 
-    
-    public boolean compareString( String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
-    	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
-    	Matcher mat	= ptn.matcher(sB);
-    	if(mat.matches())
-    		return true;
-    	else
-    		return false;
-    }
+
     
     public void scan() {
 		int state = 0;
@@ -168,10 +109,13 @@ public class Scanner {
 		
     	for(int i=0 ; i<tokenBuf.size() ; i++) {
     		bool_endLine = true;
+    		
     		for(int j=0 ; j<tokenBuf.get(i).size() ; j++) {
-    			String tkn = getOneTokenBuf(i, j);
-
-				System.out.println("token now: "+tkn);
+    			String tkn = tokenBuf.get(i).get(j);
+    			if(tkn.equals(" ")) continue;
+    			System.out.println("i: "+i+", j:"+j);
+				System.out.println("token now(略過空格): "+tkn);
+    			
 				
     			if(bool_endLine) {
 	    			bool_endLine = false;
@@ -212,6 +156,8 @@ public class Scanner {
 	        			
 	        		}
 	        		else if(compareString("for", tkn))  {
+	        			reservedWord.addMap(tkn);
+						System.out.println("token "+tkn+" belongs to reserved word");
 	        			state = 6;
 	        			
 	        		}
@@ -224,27 +170,31 @@ public class Scanner {
 	    				
 	        		}
 	    			else if(compareString("return", tkn))  {
-
 	    				state = 9;
+	    				
 	    			}
 	    			else if(compareString("switch", tkn))  {
-
 	    				state = 10;
+	    				
 	    			}
 	    	        else if(compareString("case", tkn))  {
-
 	    	        	state = 11;
+	    	        	
 	    	        }
 	    	        else if(compareString("printf", tkn))   {
-
+	    	        	reservedWord.addMap(tkn);
+						System.out.println("token "+tkn+" belongs to reserved word");
 	    	        	state = 12;
+	    	        	
 	    	        }
 	    	        else if(compareString("scanf", tkn))  {
-
 	    	        	state = 13;
+	    	        	
 	    	        }
-	    	        else 
+	    	        else {
 	    	        	state = 14;
+	    	        	
+	    	        }
 	        		continue;
 	    			}
     			
@@ -253,9 +203,7 @@ public class Scanner {
     			
     				// #
         			case 0:
-						
         				// 判斷#後面是否為include
-        				String include_tmp = getOneTokenBuf(i, 1);
         				if(compareString("include", tkn)) {
 
         					// #後面是include
@@ -264,7 +212,8 @@ public class Scanner {
 
         					// 合併<xxx.h>
         					String library_tmp = "";
-        					for(int k=2 ; k<=6 ; k++)
+        					int k;
+        					for(k=2 ; k<=6 ; k++)
         						library_tmp = library_tmp + tokenBuf.get(i).get(k);
         					
         					// 判斷#include後面是否為<xxx.h>
@@ -275,6 +224,7 @@ public class Scanner {
         						System.out.println("token "+library_tmp+" belongs to library name");
         						
         						// 結束換下一行
+        						j = k;
         						bool_endLine = true;
         					} else {
         						// library格式不正確
@@ -283,10 +233,10 @@ public class Scanner {
 
         						// 取得並分類undefinedToken
         						String undefinedTokens = "";
-        						int k = 3;
-        						while(k < 6 && k < tokenBuf_space.get(i).size()) {
-        							undefinedTokens = undefinedTokens + tokenBuf_space.get(i).get(k);
-        							k++;
+        						int f = 3;
+        						while(f < 6 && f < tokenBuf_space.get(i).size()) {
+        							undefinedTokens = undefinedTokens + tokenBuf_space.get(i).get(f);
+        							f++;
         						}
         						undefinedToken.addMap(undefinedTokens);
         						
@@ -304,14 +254,14 @@ public class Scanner {
         						bool_endLine = true;
         					}
         				} else {
-        					undefinedToken.addMap(include_tmp);
+        					undefinedToken.addMap(tkn);
     						String undefinedTokens = "";
-    						String skipTokens = "";
 							undefinedTokens = tokenBuf.get(i).get(2);
     						undefinedToken.addMap(undefinedTokens);
     						System.out.println("token "+undefinedTokens+" belongs to undefined token");
     						
     						int k = 3;
+    						String skipTokens = "";
     						while(k < tokenBuf_space.get(i).size()) {
         						skipTokens = skipTokens + tokenBuf_space.get(i).get(k);
     							k++;
@@ -330,9 +280,7 @@ public class Scanner {
         				
         			// char
         			case 2:
-
 		        		if (!bool_punctuation) {
-
     		        		Matcher mat_identifier = ptn_identifier.matcher(tkn);
     		        		if (mat_identifier.matches()) {
     		        			
@@ -341,20 +289,18 @@ public class Scanner {
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			
-        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
+        		        		Matcher mat_identifi = ptn_identifier.matcher(tokenBuf.get(i).get(j+1));
     		        			if(mat_identifi.matches()) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						identifier.addMap(pointer_tmp);
 	    		        			bool_punctuation = true;
     		        			}
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						while((j+1) < tokenBuf.get(i).size()) {
-	        						tokens.addMap("skip token");
-	        						j++;
-        						}
+        						System.out.println("token "+tkn+" belongs to undefined token");
+        						state = 14;
     		        		}
     		        		
 		        		} else if(tkn.equals(",")){
@@ -368,17 +314,14 @@ public class Scanner {
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						while((j+1) < tokenBuf.get(i).size()) {
-    							skippedToken.addMap("skip token");
-        						j++;
-    						}
+    						System.out.println("token "+tkn+" belongs to undefined token");
+    						state = 14;
 		        		}
         				break;
         				
         			// int
         			case 3:
 		        		if (!bool_punctuation) {
-
     		        		Matcher mat_identifier = ptn_identifier.matcher(tkn);
     		        		if (mat_identifier.matches()) {
     		        			
@@ -387,20 +330,18 @@ public class Scanner {
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			
-        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
+        		        		Matcher mat_identifi = ptn_identifier.matcher(tokenBuf.get(i).get(j+1));
     		        			if(mat_identifi.matches()) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						identifier.addMap(pointer_tmp);
 	    		        			bool_punctuation = true;
     		        			}
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						while((j+1) < tokenBuf.get(i).size()) {
-	        						tokens.addMap("skip token");
-	        						j++;
-        						}
+        						System.out.println("token "+tkn+" belongs to undefined token");
+        						state = 14;
     		        		}
     		        		
 		        		} else if(tkn.equals(",")){
@@ -414,17 +355,14 @@ public class Scanner {
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						while((j+1) < tokenBuf.get(i).size()) {
-    							skippedToken.addMap("skip token");
-        						j++;
-    						}
+    						System.out.println("token "+tkn+" belongs to undefined token");
+    						state = 14;
 		        		}
         				break;
         				
     				// float
         			case 4:
 		        		if (!bool_punctuation) {
-
     		        		Matcher mat_identifier = ptn_identifier.matcher(tkn);
     		        		if (mat_identifier.matches()) {
     		        			
@@ -433,20 +371,18 @@ public class Scanner {
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			
-        		        		Matcher mat_identifi = ptn_identifier.matcher(getOneTokenBuf(i, j+1));
+        		        		Matcher mat_identifi = ptn_identifier.matcher(tokenBuf.get(i).get(j+1));
     		        			if(mat_identifi.matches()) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						identifier.addMap(pointer_tmp);
 	    		        			bool_punctuation = true;
     		        			}
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						while((j+1) < tokenBuf.get(i).size()) {
-	        						tokens.addMap("skip token");
-	        						j++;
-        						}
+        						System.out.println("token "+tkn+" belongs to undefined token");
+        						state = 14;
     		        		}
     		        		
 		        		} else if(tkn.equals(",")){
@@ -460,15 +396,17 @@ public class Scanner {
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						while((j+1) < tokenBuf.get(i).size()) {
-    							skippedToken.addMap("skip token");
-        						j++;
-    						}
+    						System.out.println("token "+tkn+" belongs to undefined token");
+    						state = 14;
 		        		}
         				break;
         				
     				// if
         			case 5:
+        				if(tkn.equals("(")){
+        					bracket.addMap(tkn);
+        					
+        				}
         				break;
         				
     				// for 
@@ -497,16 +435,104 @@ public class Scanner {
         				
     				// printf 
         			case 12:
+    					Matcher mat_identifier = ptn_identifier.matcher(tkn);
+		        		if (mat_identifier.matches()) {
+		        			if(tokenBuf.get(i).get(j-2).equals(",")) {
+		        				identifier.addMap(tkn);
+		        			}else {
+		        				printedToken.addMap(tkn);
+		        			}
+		        		} else if (tkn.equals("%")||tkn.equals("\\")) {
+		        			Matcher mat_identifi = ptn_identifier.matcher(tokenBuf.get(i).get(j+1));
+		        			if(mat_identifi.matches()) {
+		        				String pointer_tmp = "";
+        						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+        						formatSpecifier.addMap(pointer_tmp);
+        		        		j++;
+		        			}
+		        		}else if (tkn.equals(",") || tkn.equals(";")||tkn.equals("\"")) {
+		        			punctuation.addMap(tkn);
+		        		}else if(tkn.equals("(")||tkn.equals(")")) {
+		        			bracket.addMap(tkn);
+		        		}else if(tkn.equals("/")){
+		        			String sa ="";
+		        			if(tokenBuf.get(i).get(j+1).equals("/")||tokenBuf.get(i).get(j+1).equals("*")) {
+		        				while(j < tokenBuf_space.get(i).size()) {
+		        					String tkn_tmp = tokenBuf.get(i).get(j);
+    		        				sa += tkn_tmp;
+		        					j++;
+    		        			}
+    		        			comment.addMap(sa);
+		        			}	
+		        		}
         				break;
         				
     				// scanf
         			case 13:
+        				break;
+        			
+        			// skipped
+        			case 14:
+						String skip_tmp = ""; 
+						while((j+1) < tokenBuf.get(i).size()) {
+							skip_tmp = skip_tmp + tokenBuf.get(i).get(j);
+    						j++;
+						}
+
+						skippedToken.addMap(skip_tmp);
+						System.out.println("token "+skip_tmp+" belongs to skipped token");
+						bool_endLine = true;
         				break;
         				
         			default:
     			}
     		}
     	}
+    }
+    
+    public boolean compareString( String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
+    	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
+    	Matcher mat	= ptn.matcher(sB);
+    	if(mat.matches())
+    		return true;
+    	else
+    		return false;
+    }
+    
+    public void pAllMap() {
+		System.out.println("reservedWord:");
+    	reservedWord.pMap();
+		System.out.println("libraryName:");
+    	libraryName.pMap();
+		System.out.println("identifier:");
+    	identifier.pMap();
+		System.out.println("character:");
+    	character.pMap();
+		System.out.println("number:");
+    	number.pMap();
+		System.out.println("pointer:");
+    	pointer.pMap();
+		System.out.println("bracket:");
+    	bracket.pMap();
+		System.out.println("operator:");
+    	operator.pMap();
+		System.out.println("comparator:");
+    	comparator.pMap();
+		System.out.println("address:");
+    	address.pMap();
+		System.out.println("punctuation:");
+    	punctuation.pMap();
+		System.out.println("formatSpecifier:");
+    	formatSpecifier.pMap();
+		System.out.println("printedToken:");
+    	printedToken.pMap();
+		System.out.println("comment:");
+    	comment.pMap();
+		System.out.println("undefinedToken:");
+    	undefinedToken.pMap();
+		System.out.println("skippedToken:");
+    	skippedToken.pMap();
+    	
     }
 }
 
