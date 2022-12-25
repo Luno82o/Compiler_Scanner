@@ -128,7 +128,7 @@ public class Scanner {
 
 	//Pattern ptn_operator = Pattern.compile("([*/%^[+{1,2}][-{1,2}]&|=])");
     
-    public boolean compareString( String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
+    public boolean compareString(String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
     	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
     	Matcher mat	= ptn.matcher(sB);
     	if(mat.matches())
@@ -151,19 +151,13 @@ public class Scanner {
 		boolean bool_elseif = false;
 		boolean bool_else = false;
 
-		
-		
-
     	for(int i=0 ; i<tokenBuf.size() ; i++) {
     		bool_endLine = true;
-    		
     		for(int j=0 ; j<tokenBuf.get(i).size() ; j++) {
     			String tkn = tokenBuf.get(i).get(j);
     			if(tkn.equals(" ")) continue;
 //    			System.out.println("i: "+i+", j:"+j);
 //				System.out.println("token now(略過空格): "+tkn);
-    			
-				
     			if(bool_endLine) {
 	    			bool_endLine = false;
 
@@ -272,24 +266,21 @@ public class Scanner {
 	    	        }
 	    	        else {
 
-                    state = 14;
-                    case_14_firstWord = tkn;
-                    if(identifier.token_defined(case_14_firstWord)){
-                      identifier.addMap(case_14_firstWord);
-                      System.out.println("token " + case_14_firstWord + " belongs to identifier");
-                    }else if(bool_bracket && case_14_firstWord.equals("}")){
-                      bracket.addMap(case_14_firstWord);
-                      System.out.println("token " + case_14_firstWord + " belongs to bracket");
-						        }
-					      }
+						state = 14;
+						case_14_firstWord = tkn;
+						if(identifier.token_defined(case_14_firstWord)){
+							identifier.addMap(case_14_firstWord);
+							System.out.println("token " + case_14_firstWord + " belongs to identifier");
+						}else if(bool_bracket && case_14_firstWord.equals("}")){
+							bracket.addMap(case_14_firstWord);
+							System.out.println("token " + case_14_firstWord + " belongs to bracket");
+						}
 
-
-	    	        	
-	    	        	
-	    	        }
+					}
+	    	    
 
 	        		continue;
-	    		}
+				}
     			
 
     			switch(state) {
@@ -412,7 +403,7 @@ public class Scanner {
     		        		} else if (tkn.equals("*")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						pointer.addMap(pointer_tmp);
 
 									System.out.println("token " + pointer_tmp + " belongs to pointer");
@@ -461,7 +452,7 @@ public class Scanner {
     		        		} else if (tkn.equals("*")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
 	    		        			String pointer_tmp = "";
-            						pointer_tmp = tkn + getOneTokenBuf(i, ++j);
+            						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						pointer.addMap(pointer_tmp);
 
 									System.out.println("token " + pointer_tmp + " belongs to pointer");
@@ -505,7 +496,7 @@ public class Scanner {
 							Matcher mat_identifier = ptn_identifier.matcher(tkn);
 							
 							// deal with ++, --, !=, ==, <=, >=
-							String back_char = getOneTokenBuf(i, j+1);
+							String back_char = tokenBuf.get(i).get(j+1);
 							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
 								tkn += back_char;
 								j++;
@@ -612,7 +603,7 @@ public class Scanner {
 							Matcher mat_identifier = ptn_identifier.matcher(tkn);
 							
 							// deal with ++, --, !=, ==, <=, >=
-							String back_char = getOneTokenBuf(i, j+1);
+							String back_char = tokenBuf.get(i).get(j+1);
 							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
 								tkn += back_char;
 								j++;
@@ -719,7 +710,7 @@ public class Scanner {
 							Matcher mat_identifier = ptn_identifier.matcher(tkn);
 							
 							// deal with ++, --, !=, ==, <=, >=
-							String back_char = getOneTokenBuf(i, j+1);
+							String back_char = tokenBuf.get(i).get(j+1);
 							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
 								tkn += back_char;
 								j++;
@@ -1099,23 +1090,9 @@ public class Scanner {
 							}
 						}
     			}
-    		}
+			}
     	}
-    }
-    
-    
-    public boolean compareString(String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
-    	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
-    	Matcher mat	= ptn.matcher(sB);
-    	if(mat.matches())
-    		return true;
-    	else
-    		return false;
-    }
-    
-    
-    
-    
+	}
     public boolean compareIdentifier(String S) {	// sA放正確的字串 sB放需要被比字串
         Pattern ptn = Pattern.compile("([a-zA-Z])([a-zA-Z0-9]*)"); 
     	Matcher mat	= ptn.matcher(S);
