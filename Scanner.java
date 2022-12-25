@@ -123,6 +123,7 @@ public class Scanner {
 	        		}
 	        		else if(compareString("main", tkn)) {
 	        			state = 1;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	        			
 	        		}
 	        		else if(compareString("char", tkn)) {
@@ -148,6 +149,7 @@ public class Scanner {
 	        		}
 	        		else if(compareString("if", tkn)) {
 	        			state = 5;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	        			
 	        		}
 	        		else if(compareString("for", tkn))  {
@@ -158,22 +160,27 @@ public class Scanner {
 	        		}
 	        		else if(compareString("while", tkn))  {
 	        			state = 7;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	        			
 	        		}
 	        		else if(compareString("do", tkn))  {
 	    				state = 8;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	    				
 	        		}
 	    			else if(compareString("return", tkn))  {
 	    				state = 9;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	    				
 	    			}
 	    			else if(compareString("switch", tkn))  {
 	    				state = 10;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	    				
 	    			}
 	    	        else if(compareString("case", tkn))  {
 	    	        	state = 11;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	    	        	
 	    	        }
 	    	        else if(compareString("printf", tkn))   {
@@ -192,6 +199,7 @@ public class Scanner {
 	    	        }
 	    	        else {
 	    	        	state = 14;
+	    	        	System.out.println("token "+tkn+" not classified yet");
 	    	        	
 	    	        }
 	        		continue;
@@ -251,6 +259,7 @@ public class Scanner {
         				
     				// main
         			case 1:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
         			// char
@@ -387,26 +396,32 @@ public class Scanner {
         				
     				// for 
         			case 6:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// while 
         			case 7:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// do 
         			case 8:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// return 
         			case 9:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// switch 
         			case 10:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// case 
         			case 11:
+	    	        	System.out.println("token "+tkn+" not classified yet");
         				break;
         				
     				// printf 
