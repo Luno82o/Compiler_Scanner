@@ -24,7 +24,7 @@ public class Token{
     		tokens.put(token, 1);
     	}
 
-    	System.out.println("addMap: "+token);
+//    	System.out.println("addMap: "+token);
     	addAmount();
     }
     
@@ -33,7 +33,7 @@ public class Token{
     	System.out.println(tokens);
     }
     
-	// 印出Map-tokens
+	// 增加數量
     public void addAmount() {
     	amount++;
     }

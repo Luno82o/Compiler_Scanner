@@ -7,7 +7,7 @@ public class Main {
 	    Scanner sc = new Scanner();
 	    
         //輸入檔名
-        System.out.print("filename(xxx.txt):");
+        System.out.println("filename(xxx.txt):");
 
 //        java.util.Scanner input = new java.util.Scanner(System.in);
 //        String filename = input.nextLine();
