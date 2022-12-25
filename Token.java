@@ -1,10 +1,18 @@
 import java.util.Map;
+//import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Token{
 	
 	private Map<String, Integer> tokens = new HashMap<>();
 	private int amount = 0;
+	//private ArrayList<String> form = new ArrayList<>();
+
+	public Token(){}
+
+	// public Token(String line){
+
+	// }
 
     // 新增值到Map-tokens
     public void addMap(String token) {
@@ -29,4 +37,11 @@ public class Token{
     public void addAmount() {
     	amount++;
     }
+
+	public boolean token_defined(String t){
+		if(tokens.containsKey(t)){
+			return true;
+		}
+		return false;
+	}
 } 
