@@ -24,6 +24,18 @@ public class Scanner {
 	private static Token comment = new Token();
 	private static Token undefinedToken = new Token();
 	private static Token skippedToken = new Token();
+
+	private ArrayList<String> operator_form = new ArrayList<String>(){
+		{
+			add("+");add("-");add("*");add("/");add("++");add("--");
+			add("%");add("^");add("&");add("|");add("=");
+		}
+	};
+	// private ArrayList<String> punctuation_form = new ArrayList<String>(){
+	// 	{
+	// 		add(";");add(",");add("#");
+	// 	}
+	// };
     
     
     public void readTxt(String filename) {        
@@ -150,6 +162,8 @@ public class Scanner {
     Pattern ptn_libname = Pattern.compile("(<)([a-zA-Z]+)(.h>)"); 
     Pattern ptn_identifier = Pattern.compile("([a-zA-Z])([a-zA-Z0-9]*)"); 
 
+	Pattern ptn_number = Pattern.compile("-?\\d+");
+
 	//Pattern ptn_operator = Pattern.compile("([*/%^[+{1,2}][-{1,2}]&|=])");
     
     public boolean compareString( String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
@@ -163,6 +177,7 @@ public class Scanner {
     
     public void scan() {
 		int state = 0;
+		String case_14_firstWord = null;
 
 		boolean bool_endLine = true;
 //		boolean bool_include = false;
@@ -250,10 +265,20 @@ public class Scanner {
 
 	    	        	state = 13;
 	    	        }
-	    	        else 
-	    	        	state = 14;
+	    	        else {
+						state = 14;
+						case_14_firstWord = tkn;
+						if(identifier.token_defined(case_14_firstWord)){
+							identifier.addMap(case_14_firstWord);
+							System.out.println("token " + case_14_firstWord + " belongs to identifier");
+						}else if(bool_bracket && case_14_firstWord.equals("}")){
+							bracket.addMap(case_14_firstWord);
+							System.out.println("token " + case_14_firstWord + " belongs to bracket");
+						}
+					}
+
 	        		continue;
-	    			}
+	    		}
     			
 
     			switch(state) {
@@ -283,6 +308,7 @@ public class Scanner {
         						
         						// 結束換下一行
         						bool_endLine = true;
+								j = tokenBuf.get(i).size()-1;
         					} else {
         						// library格式不正確
         						comparator.addMap(tkn);
@@ -592,8 +618,32 @@ public class Scanner {
         				
         			default:
 						// k = k + i;
+						
 						if(identifier.token_defined(tkn)){
-							
+							identifier.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to identifier");
+						}else if(operator_form.contains(tkn)){
+							operator.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to operator");
+						}else if(tkn.equals(";")){
+							punctuation.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to punctuation");
+						}else{
+							Matcher mat_number = ptn_number.matcher(tkn);
+							if(mat_number.matches()){
+								number.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to number");
+							}else{
+								undefinedToken.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to undefined token");
+								System.out.println("token");
+								while((j+1) < tokenBuf.get(i).size()) {
+									skippedToken.addMap("skip token");
+									System.out.print(" " + tkn);
+									j++;
+								}
+								System.out.println(" belongs to skipped token");
+							}
 						}
     			}
     		}
