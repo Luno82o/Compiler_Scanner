@@ -29,4 +29,11 @@ public class Token{
     public void addAmount() {
     	amount++;
     }
+
+	public boolean token_defined(String t){
+		if(tokens.containsKey(t)){
+			return true;
+		}
+		return false;
+	}
 } 
