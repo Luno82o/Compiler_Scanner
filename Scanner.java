@@ -148,22 +148,26 @@ public class Scanner {
 		boolean bool_bracket = false;
 
 		boolean bool_doWhile = false;
-    
 		boolean bool_elseif = false;
 		boolean bool_else = false;
 		
 		String sa ="";
 		
+		Matcher mat_number;
+		
     	for(int i=0 ; i<tokenBuf.size() ; i++) {
     		bool_endLine = true;
+    		
     		for(int j=0 ; j<tokenBuf.get(i).size() ; j++) {
     			String tkn = tokenBuf.get(i).get(j);
     			if(tkn.equals(" ")) continue;
+    			
 //    			System.out.println("i: "+i+", j:"+j);
 //				System.out.println("token now(略過空格): "+tkn);
+    			
     			if(bool_endLine) {
 	    			bool_endLine = false;
-
+	    			
 	        		if(compareString("#", tkn)) {
 	        			state = 0;
         				punctuation.addMap(tkn);
@@ -232,7 +236,8 @@ public class Scanner {
 	        		}
 	    			else if(compareString("return", tkn))  {
 	    				state = 9;
-	    	        	System.out.println("token "+tkn+" not classified yet");
+						reservedWord.addMap(tkn);
+						System.out.println("token " + tkn + " belongs to reserved word");
 	    				
 	    			}
 	    			else if(compareString("switch", tkn)) {
@@ -845,7 +850,28 @@ public class Scanner {
         				
     				// return 
         			case 9:
-	    	        	System.out.println("token "+tkn+" not classified yet");
+        				mat_number = ptn_number.matcher(tkn);
+						// meet number
+						if(mat_number.matches()){
+							number.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to number");
+						}
+						else if(identifier.token_defined(tkn)){
+							identifier.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to identifier");
+						}
+						// meet punctuation ";"
+						else if(tkn.equals(";")){
+							punctuation.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to punctuation");
+							bool_endLine = true;
+						}
+						// meet undefined
+						else{
+							undefinedToken.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to undefined token");
+							state = 16;
+						}
         				break;
         				
     				// switch 
@@ -1014,9 +1040,9 @@ public class Scanner {
 							System.out.println("token " + tkn + " belongs to punctuation");
 							bool_endLine = true;
 						}
-						
 						else{
-							Matcher mat_number = ptn_number.matcher(tkn);
+							mat_number = ptn_number.matcher(tkn);
+							
 							// meet number
 							if(mat_number.matches()){
 								number.addMap(tkn);
