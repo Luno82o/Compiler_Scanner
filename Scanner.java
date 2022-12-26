@@ -1189,6 +1189,19 @@ public class Scanner {
     	System.out.println(" ");
     	
     }
+
+	public int total_token(){
+		int total = 0;
+
+		total = reservedWord.tokenType_num() + libraryName.tokenType_num() + identifier.tokenType_num()
+				+ character.tokenType_num() + number.tokenType_num() + pointer.tokenType_num() 
+				+ bracket.tokenType_num() + operator.tokenType_num() + comparator.tokenType_num()
+				+ address.tokenType_num() + punctuation.tokenType_num() + formatSpecifier.tokenType_num()
+				+ printedToken.tokenType_num() + comment.tokenType_num() + undefinedToken.tokenType_num()
+				+ skippedToken.tokenType_num();
+		
+		return total;
+	}
 }
 
 //System.out.println(valueName.getClass().getSimpleName());		//取得變數的type
