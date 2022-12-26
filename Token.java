@@ -45,15 +45,24 @@ public class Token{
 		return false;
 	}
 	// return 該種 Token 的 total 
-	public int tokenType_num(){
-		for(Map.Entry<String, Integer> m : tokens.entrySet()){
-			amount += m.getValue();
-		}
-		return amount;
+	// public int tokenType_num(){
+		
+	// 	for(Map.Entry<String, Integer> m : tokens.entrySet()){
+	// 		amount += m.getValue();
+	// 	}
+	// 	return amount;
+	// }
+
+	// get amount
+	public int get_Amount(){
+
+		return this.amount;
+		
 	}
 
 	// get Map<String, Integer>
-	public Map<String, Integer> get_TokenMap(Map<String, Integer> tokens){
+	public Map<String, Integer> get_TokenMap(){
+		
 		return this.tokens;
 	}
 } 

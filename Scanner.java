@@ -22,6 +22,55 @@ public class Scanner {
 	private static Token undefinedToken = new Token();
 	private static Token skippedToken = new Token();
 
+	public Token get_ReserveWord(){
+		return reservedWord;
+	}
+	public Token get_LibraryName(){
+		return libraryName;
+	}
+	public Token get_Identifier(){
+		return identifier;
+	}
+	public Token get_Character(){
+		return character;
+	}
+	public Token get_Number(){
+		return number;
+	}
+	public Token get_Pointer(){
+		return pointer;
+	}
+	public Token get_Bracket(){
+		return bracket;
+	}
+	public Token get_Operator(){
+		return operator;
+	}
+	public Token get_Comparator(){
+		return comparator;
+	}
+	public Token get_Address(){
+		return address;
+	}
+	public Token get_Punctuation(){
+		return punctuation;
+	}
+	public Token get_Format_Specifier(){
+		return formatSpecifier;
+	}
+	public Token get_PrintedToken(){
+		return printedToken;
+	}
+	public Token get_Comment(){
+		return comment;
+	}
+	public Token get_UndefinedToken(){
+		return undefinedToken;
+	}
+	public Token get_Skipped_Token(){
+		return skippedToken;
+	}
+
 	private ArrayList<String> operator_form = new ArrayList<String>(){
 		{
 			add("+");add("-");add("*");add("/");add("++");add("--");
@@ -307,6 +356,7 @@ public class Scanner {
     			switch(state) {
     			
     				// #
+					
         			case 0:
         				// 判斷#後面是否為include
         				if(compareString("include", tkn)) {
@@ -1193,12 +1243,12 @@ public class Scanner {
 	public int total_token(){
 		int total = 0;
 
-		total = reservedWord.tokenType_num() + libraryName.tokenType_num() + identifier.tokenType_num()
-				+ character.tokenType_num() + number.tokenType_num() + pointer.tokenType_num() 
-				+ bracket.tokenType_num() + operator.tokenType_num() + comparator.tokenType_num()
-				+ address.tokenType_num() + punctuation.tokenType_num() + formatSpecifier.tokenType_num()
-				+ printedToken.tokenType_num() + comment.tokenType_num() + undefinedToken.tokenType_num()
-				+ skippedToken.tokenType_num();
+		total = reservedWord.get_Amount() + libraryName.get_Amount() + identifier.get_Amount()
+				+ character.get_Amount() + number.get_Amount() + pointer.get_Amount() 
+				+ bracket.get_Amount() + operator.get_Amount() + comparator.get_Amount()
+				+ address.get_Amount() + punctuation.get_Amount() + formatSpecifier.get_Amount()
+				+ printedToken.get_Amount() + comment.get_Amount() + undefinedToken.get_Amount()
+				+ skippedToken.get_Amount();
 		
 		return total;
 	}
