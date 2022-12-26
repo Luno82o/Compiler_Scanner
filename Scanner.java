@@ -130,15 +130,6 @@ public class Scanner {
 
 	//Pattern ptn_operator = Pattern.compile("([*/%^[+{1,2}][-{1,2}]&|=])");
     
-    public boolean compareString(String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
-    	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
-    	Matcher mat	= ptn.matcher(sB);
-    	if(mat.matches())
-    		return true;
-    	else
-    		return false;
-    }
-    
 
     public void scan() {
 		int state = 0;
@@ -278,17 +269,12 @@ public class Scanner {
 	        		else if(tkn.equals("/")) {
 						state = 15;
 	        			sa = "/";
-	        			
         			}
 	    	        else {
 						state = 16;
 						undefinedToken.addMap(tkn);
 						System.out.println("token " + tkn + " belongs to undefined token");
-	    	        	
 	    	        }
-						
-
-
 	        		continue;
 				}
     			
@@ -493,15 +479,14 @@ public class Scanner {
         				
     				// if
         			case 5:
-
-						//
 						// meet identifier, operator, comparator, number
 						if(!bool_bracket && !bool_punctuation){
 							Matcher mat_identifier = ptn_identifier.matcher(tkn);
 							
-							// deal with ++, --, !=, ==, <=, >=
+							// deal with ++, --, !=, ==, <=, >= compareString
 							String back_char = tokenBuf.get(i).get(j+1);
-							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
+
+							if( compareString("[+-=!<>]", tkn) && compareString("[+-=]", back_char) ){
 								tkn += back_char;
 								j++;
 							}
@@ -1093,6 +1078,16 @@ public class Scanner {
 			}
     	}
 	}
+
+    
+    public boolean compareString(String sA, String sB) {	// sA放正確的字串 sB放需要被比字串
+    	Pattern ptn = Pattern.compile(sA, Pattern.CASE_INSENSITIVE); 
+    	Matcher mat	= ptn.matcher(sB);
+    	if(mat.matches())
+    		return true;
+    	else
+    		return false;
+    }
     
     
     public boolean compareIdentifier(String S) {	// sA放正確的字串 sB放需要被比字串
