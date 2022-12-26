@@ -24,10 +24,14 @@ public class Output {
     public void WriteFile(){
         
         Scanner sc = new Scanner();
+        
         try {
-            
+            int lineC = 1;
             FileWriter writer = new FileWriter("output.txt");
-
+            
+//            writer.write(lineC + "\n");
+            
+            
             writer.write("Total: " + sc.total_token() + "tokens\n");
 
             if(sc.get_ReserveWord().get_TokenMap().size() > 0){

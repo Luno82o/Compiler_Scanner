@@ -191,7 +191,7 @@ public class Scanner {
 
     public void scan() {
 		int state = 0;
-
+		
 		boolean bool_endLine = true;
 		boolean bool_punctuation = false;
 		boolean bool_bracket = false;
