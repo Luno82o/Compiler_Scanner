@@ -195,6 +195,9 @@ public class Scanner {
 	        			state = 5;
 
 	        			bool_bracket = true;
+						bool_elseif = true;
+						bool_else = true;
+
 						reservedWord.addMap(tkn);
 						System.out.println("token " + tkn + "belongs to reserved word");
 
@@ -270,6 +273,54 @@ public class Scanner {
 						state = 15;
 	        			sa = "/";
         			}
+					else if(tkn.equals("elseif")) {
+						if(bool_elseif){
+							state = 17;
+							reservedWord.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to reserved word");
+						}
+						else{
+							undefinedToken.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to undefined token");
+							// System.out.println("token");
+							String skipped_token = null;
+							while((j+1) < tokenBuf.get(i).size()) {
+
+								// skippedToken.addMap("skip token");
+								// System.out.print(" " + tkn);
+								skipped_token += tokenBuf.get(i).get(j);
+								j++;
+
+							}
+							skippedToken.addMap(skipped_token);
+							System.out.println("token " + skipped_token + " belongs to skipped token");
+						}
+					}
+					else if(tkn.equals("else")) {
+						if(bool_elseif || bool_else){
+							state = 18;
+							reservedWord.addMap(tkn);
+							bool_bracket = true;
+							System.out.println("token " + tkn + " belongs to reserved word");
+						}
+						else{
+							undefinedToken.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to undefined token");
+							// System.out.println("token");
+							String skipped_token = null;
+							while((j+1) < tokenBuf.get(i).size()) {
+
+								// skippedToken.addMap("skip token");
+								// System.out.print(" " + tkn);
+								skipped_token += tokenBuf.get(i).get(j);
+								j++;
+
+							}
+							skippedToken.addMap(skipped_token);
+							System.out.println("token " + skipped_token + " belongs to skipped token");
+						}
+						
+					}
 	    	        else {
 						state = 16;
 						undefinedToken.addMap(tkn);
@@ -387,7 +438,7 @@ public class Scanner {
 		        		if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to identifier token");
+        						// System.out.println("token "+tkn+" belongs to identifier token");
     		        			bool_punctuation = true;
 
 								System.out.println("token " + tkn + " belongs to identifier");
@@ -581,6 +632,9 @@ public class Scanner {
 							System.out.println("token " + skipped_token + " belongs to skipped token");
 						}
 
+						bool_elseif = true;
+						bool_else = true;
+
         				break;
         				
     				// for 
@@ -597,7 +651,7 @@ public class Scanner {
 								tkn += back_char;
 								j++;
 							}
-
+							
 							if(mat_identifier.matches()){
 								identifier.addMap(tkn);
 								System.out.println("token " + tkn + " belongs to identifier");
@@ -700,6 +754,7 @@ public class Scanner {
 							
 							// deal with ++, --, !=, ==, <=, >=
 							String back_char = tokenBuf.get(i).get(j+1);
+							// (tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))
 							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
 								tkn += back_char;
 								j++;
@@ -1072,7 +1127,143 @@ public class Scanner {
 						System.out.println("token "+skip_tmp+" belongs to skipped token");
 						bool_endLine = true;
         				break;
-        				
+        			
+					// elseif
+					case 17:
+						
+						// meet identifier, operator, comparator, number
+						if(!bool_bracket && !bool_punctuation){
+							Matcher mat_identifier = ptn_identifier.matcher(tkn);
+							
+							// deal with ++, --, !=, ==, <=, >=
+							String back_char = tokenBuf.get(i).get(j+1);
+							// (tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))
+							if((tkn.equals("+")||tkn.equals("-")||tkn.equals("=")||tkn.equals("!")||tkn.equals("<")||tkn.equals(">")) && (back_char.equals("=") || back_char.equals("+") || back_char.equals("-"))){
+								tkn += back_char;
+								j++;
+							}
+
+							if(mat_identifier.matches()){
+								identifier.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to identifier");
+
+							}else if(operator_form.contains(tkn)){
+
+								if(tkn.equals("++") || tkn.equals("--")){
+									bool_bracket = true;
+									bool_punctuation = false;
+								}else{
+									bool_bracket = false;
+									bool_punctuation = false;
+								}
+								operator.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to operator");
+
+							}else if(comparator_form.contains(tkn)){
+								
+								comparator.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to comparator");
+
+							}else if(ptn_number.matcher(tkn).matches()){
+
+								number.addMap(tkn);
+								bool_punctuation = true;
+								bool_bracket = false;
+								System.out.println("token " + tkn + " belongs to number");
+
+							}else{
+
+								undefinedToken.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to undefined token");
+								System.out.println("token");
+								String skipped_token = null;
+								while((j+1) < tokenBuf.get(i).size()) {
+
+									// skippedToken.addMap("skip token");
+									// System.out.print(" " + tkn);
+									skipped_token += tokenBuf.get(i).get(j);
+									j++;
+
+								}
+								skippedToken.addMap(skipped_token);
+								System.out.println("token " + skipped_token + " belongs to skipped token");
+
+							}
+						}
+						// meet punctuation
+						else if(!bool_bracket && bool_punctuation && punctuation_form.contains(tkn)){
+
+							punctuation.addMap(tkn);
+							bool_punctuation = false;
+							System.out.println("token " + tkn + " belongs to punctuation");
+
+						}
+						// meet bracket( "(", ")", "{")
+						else if(bool_bracket && !bool_punctuation && bracket_form.contains(tkn)){
+							
+							if(tkn.equals("(")){
+
+								bool_punctuation = false;
+								bool_bracket = false;
+
+							}else{
+ 
+								bool_punctuation = false;
+								bool_bracket = true;
+
+							}
+							bracket.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to bracket");
+
+						}else{
+
+							undefinedToken.addMap(tkn);
+							System.out.println("token " + tkn + " belongs to undefined token");
+							System.out.println("token");
+							String skipped_token = null;
+							while((j+1) < tokenBuf.get(i).size()) {
+
+								// skippedToken.addMap("skip token");
+								// System.out.print(" " + tkn);
+								skipped_token += tokenBuf.get(i).get(j);
+								j++;
+
+							}
+							skippedToken.addMap(skipped_token);
+							System.out.println("token " + skipped_token + " belongs to skipped token");
+
+						}
+
+						break;
+					// else
+					case 18:
+						if(bool_bracket && bracket_form.contains(tkn)){
+
+							bracket.addMap(tkn);
+							System.out.println("token " + tkn + "belongs to bracket");
+			
+							bool_bracket = false;
+							bool_elseif = false;
+							bool_else = false;
+
+						}
+						else{
+
+							undefinedToken.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to undefined token");
+								System.out.println("token");
+								String skipped_token = null;
+								while((j+1) < tokenBuf.get(i).size()) {
+									// skippedToken.addMap("skip token");
+									// System.out.print(" " + tkn);
+									skipped_token += tokenBuf.get(i).get(j);
+									j++;
+								}
+								skippedToken.addMap(skipped_token);
+								System.out.println("token " + skipped_token + " belongs to skipped token");
+
+						}
+						break;
         			default:
     			}
 			}
