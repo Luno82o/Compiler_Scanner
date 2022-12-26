@@ -29,7 +29,7 @@ public class Output {
             int lineC = 1;
             FileWriter writer = new FileWriter("output.txt");
             
-//            writer.write(lineC + "\n");
+            writer.write(lineC + ".\t\n");
             
             
             writer.write("Total: " + sc.total_token() + "tokens\n");

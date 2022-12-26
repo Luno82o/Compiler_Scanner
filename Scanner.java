@@ -22,55 +22,6 @@ public class Scanner {
 	private static Token undefinedToken = new Token();
 	private static Token skippedToken = new Token();
 
-	public Token get_ReserveWord(){
-		return reservedWord;
-	}
-	public Token get_LibraryName(){
-		return libraryName;
-	}
-	public Token get_Identifier(){
-		return identifier;
-	}
-	public Token get_Character(){
-		return character;
-	}
-	public Token get_Number(){
-		return number;
-	}
-	public Token get_Pointer(){
-		return pointer;
-	}
-	public Token get_Bracket(){
-		return bracket;
-	}
-	public Token get_Operator(){
-		return operator;
-	}
-	public Token get_Comparator(){
-		return comparator;
-	}
-	public Token get_Address(){
-		return address;
-	}
-	public Token get_Punctuation(){
-		return punctuation;
-	}
-	public Token get_Format_Specifier(){
-		return formatSpecifier;
-	}
-	public Token get_PrintedToken(){
-		return printedToken;
-	}
-	public Token get_Comment(){
-		return comment;
-	}
-	public Token get_UndefinedToken(){
-		return undefinedToken;
-	}
-	public Token get_Skipped_Token(){
-		return skippedToken;
-	}
-
 	private ArrayList<String> operator_form = new ArrayList<String>(){
 		{
 			add("+");add("-");add("*");add("/");add("++");add("--");
@@ -1221,6 +1172,57 @@ public class Scanner {
 		
 		return total;
 	}
+	
+
+	public Token get_ReserveWord(){
+		return reservedWord;
+	}
+	public Token get_LibraryName(){
+		return libraryName;
+	}
+	public Token get_Identifier(){
+		return identifier;
+	}
+	public Token get_Character(){
+		return character;
+	}
+	public Token get_Number(){
+		return number;
+	}
+	public Token get_Pointer(){
+		return pointer;
+	}
+	public Token get_Bracket(){
+		return bracket;
+	}
+	public Token get_Operator(){
+		return operator;
+	}
+	public Token get_Comparator(){
+		return comparator;
+	}
+	public Token get_Address(){
+		return address;
+	}
+	public Token get_Punctuation(){
+		return punctuation;
+	}
+	public Token get_Format_Specifier(){
+		return formatSpecifier;
+	}
+	public Token get_PrintedToken(){
+		return printedToken;
+	}
+	public Token get_Comment(){
+		return comment;
+	}
+	public Token get_UndefinedToken(){
+		return undefinedToken;
+	}
+	public Token get_Skipped_Token(){
+		return skippedToken;
+	}
+
 }
 
 //System.out.println(valueName.getClass().getSimpleName());		//取得變數的type
