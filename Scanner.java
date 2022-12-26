@@ -1169,53 +1169,101 @@ public class Scanner {
 	}
 	
 
-	public Token get_ReserveWord(){
-		return reservedWord;
+	public Map<String, Integer> get_ReserveWord_TokenMap(){
+		return reservedWord.get_TokenMap();
 	}
-	public Token get_LibraryName(){
-		return libraryName;
+	public int get_ReserveWord_Amount(){
+		return reservedWord.get_Amount();
 	}
-	public Token get_Identifier(){
-		return identifier;
+	public Map<String, Integer> get_LibraryName_TokenMap(){
+		return libraryName.get_TokenMap();
 	}
-	public Token get_Character(){
-		return character;
+	public int get_LibraryName_Amount(){
+		return libraryName.get_Amount();
 	}
-	public Token get_Number(){
-		return number;
+	public Map<String, Integer> get_Identifier_TokenMap(){
+		return identifier.get_TokenMap();
 	}
-	public Token get_Pointer(){
-		return pointer;
+	public int get_Identifier_Amount(){
+		return identifier.get_Amount();
 	}
-	public Token get_Bracket(){
-		return bracket;
+	public Map<String, Integer> get_Character_TokenMap(){
+		return character.get_TokenMap();
 	}
-	public Token get_Operator(){
-		return operator;
+	public int get_Character_Amount(){
+		return character.get_Amount();
 	}
-	public Token get_Comparator(){
-		return comparator;
+	public Map<String, Integer> get_Number_TokenMap(){
+		return number.get_TokenMap();
 	}
-	public Token get_Address(){
-		return address;
+	public int get_Number_Amount(){
+		return number.get_Amount();
 	}
-	public Token get_Punctuation(){
-		return punctuation;
+	public Map<String, Integer> get_Pointer_TokenMap(){
+		return pointer.get_TokenMap();
 	}
-	public Token get_Format_Specifier(){
-		return formatSpecifier;
+	public int get_Pointer_Amount(){
+		return pointer.get_Amount();
 	}
-	public Token get_PrintedToken(){
-		return printedToken;
+	public Map<String, Integer> get_Bracket_TokenMap(){
+		return bracket.get_TokenMap();
 	}
-	public Token get_Comment(){
-		return comment;
+	public int get_Bracket_Amount(){
+		return bracket.get_Amount();
 	}
-	public Token get_UndefinedToken(){
-		return undefinedToken;
+	public Map<String, Integer> get_Operator_TokenMap(){
+		return operator.get_TokenMap();
 	}
-	public Token get_Skipped_Token(){
-		return skippedToken;
+	public int get_Operator_Amount(){
+		return operator.get_Amount();
+	}
+	public Map<String, Integer> get_Comparator_TokenMap(){
+		return comparator.get_TokenMap();
+	}
+	public int get_Comparator_Amount(){
+		return comparator.get_Amount();
+	}
+	public Map<String, Integer> get_Address_TokenMap(){
+		return address.get_TokenMap();
+	}
+	public int get_Address_Amount(){
+		return address.get_Amount();
+	}
+	public Map<String, Integer> get_Punctuation_TokenMap(){
+		return punctuation.get_TokenMap();
+	}
+	public int get_Punctuation_Amount(){
+		return punctuation.get_Amount();
+	}
+	public Map<String, Integer> get_Format_Specifier_TokenMap(){
+		return formatSpecifier.get_TokenMap();
+	}
+	public int get_Format_Specifier_Amount(){
+		return formatSpecifier.get_Amount();
+	}
+	public Map<String, Integer> get_PrintedToken_TokenMap(){
+		return printedToken.get_TokenMap();
+	}
+	public int get_PrintedToken_Amount(){
+		return printedToken.get_Amount();
+	}
+	public Map<String, Integer> get_Comment_TokenMap(){
+		return comment.get_TokenMap();
+	}
+	public int get_Comment_Amount(){
+		return comment.get_Amount();
+	}
+	public Map<String, Integer> get_UndefinedToken_TokenMap(){
+		return undefinedToken.get_TokenMap();
+	}
+	public int get_UndefinedToken_Amount(){
+		return undefinedToken.get_Amount();
+	}
+	public Map<String, Integer> get_Skipped_Token_TokenMap(){
+		return skippedToken.get_TokenMap();
+	}
+	public int get_Skipped_Token_Amount(){
+		return skippedToken.get_Amount();
 	}
 
 }

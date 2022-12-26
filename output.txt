@@ -1,8 +1,9 @@
-Total: 54tokens
+1.	
+Total: 53 tokens
 
-Reserved word: 5
+Reserved word: 4
 include
-for (x2)
+for
 int
 printf
 
