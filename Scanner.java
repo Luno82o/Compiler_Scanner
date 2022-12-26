@@ -29,6 +29,7 @@ public class Scanner {
 		}
 	};
 	
+	int bracket_check = 0;
 	private ArrayList<String> bracket_form = new ArrayList<String>(){
 		{
 			add("(");add(")");add("{");add("}");add("[");add("]");
@@ -321,6 +322,17 @@ public class Scanner {
 						}
 						
 					}
+					// else if(tkn.equals("*")){
+					// 	if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+					// 		String pointer_tmp = "";
+					// 		pointer_tmp = tkn + tokenBuf.get(i).get(++j);
+					// 		pointer.addMap(pointer_tmp);
+
+					// 		System.out.println("token " + pointer_tmp + " belongs to pointer");
+
+					// 		// bool_punctuation = true;
+					// 	}
+					// }
 	    	        else {
 						state = 16;
 						undefinedToken.addMap(tkn);
@@ -1070,6 +1082,14 @@ public class Scanner {
 							identifier.addMap(tkn);
 							System.out.println("token " + tkn + " belongs to identifier");
 						}
+						// meet pointer
+						else if(tkn.equals("*") && compareIdentifier(tokenBuf.get(i).get(j+1))){
+							String pointer_tmp = "";
+							pointer_tmp = tkn + tokenBuf.get(i).get(++j);
+							pointer.addMap(pointer_tmp);
+
+							System.out.println("token " + pointer_tmp + " belongs to pointer");
+						}
 						// meet operator
 						else if(operator_form.contains(tkn)){
 							operator.addMap(tkn);
@@ -1080,6 +1100,33 @@ public class Scanner {
 							punctuation.addMap(tkn);
 							System.out.println("token " + tkn + " belongs to punctuation");
 							bool_endLine = true;
+						}
+						// meet bracket
+						else if(bracket_form.contains(tkn)){
+							// meet left bracket
+							if(!bool_bracket){
+								bracket.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to bracket");
+								bool_bracket = true;
+								bracket_check = bracket_form.indexOf(tkn);
+							}
+							// meet right bracket 
+							else{
+								// wrong right bracket
+								if(!bracket_form.get(bracket_check+1).equals(tkn) && bool_bracket){
+
+									undefinedToken.addMap(tkn);
+									state = 16;
+
+								}
+								// correct right bracket
+								else{
+									bracket.addMap(tkn);
+									System.out.println("token " + tkn + " belongs to bracket");
+									bool_bracket = false;
+								}
+							}
+							
 						}
 						else{
 							mat_number = ptn_number.matcher(tkn);
