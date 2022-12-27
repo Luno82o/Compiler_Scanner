@@ -1462,7 +1462,7 @@ public class Scanner {
 		return skippedToken.get_Amount();
 	}
 
-
+	// get all 判斷的過程
 	public String get_Judgement(){
 		return Judgement;
 	}
