@@ -142,6 +142,9 @@ public class Scanner {
 		boolean bool_doWhile = false;
 		boolean bool_elseif = false;
 		boolean bool_else = false;
+
+		// 單引號
+		String char_token = "";
 		
 		String sa ="";
 		
@@ -322,17 +325,7 @@ public class Scanner {
 						}
 						
 					}
-					// else if(tkn.equals("*")){
-					// 	if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
-					// 		String pointer_tmp = "";
-					// 		pointer_tmp = tkn + tokenBuf.get(i).get(++j);
-					// 		pointer.addMap(pointer_tmp);
-
-					// 		System.out.println("token " + pointer_tmp + " belongs to pointer");
-
-					// 		// bool_punctuation = true;
-					// 	}
-					// }
+					
 	    	        else {
 						state = 16;
 						undefinedToken.addMap(tkn);
@@ -1031,7 +1024,7 @@ public class Scanner {
 	        						state = 16;
     	        				}
     		        		}else if(tkn.equals("&")) {
-    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1)) && identifier.get_TokenMap().containsKey(char_token)) {
     		        				String pointer_tmp = "";
             						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
             						address.addMap(pointer_tmp);
@@ -1039,8 +1032,10 @@ public class Scanner {
             		        		j++;
             		        		
     		        			} else {
-    			        			undefinedToken.addMap(tkn);
-    	    						System.out.println("token "+tkn+" belongs to undefined token");
+									String undefindString = "";
+									undefindString = tkn + tokenBuf.get(i).get(++j);
+    			        			undefinedToken.addMap(undefindString);
+    	    						System.out.println("token "+undefindString+" belongs to undefined token");
     	    						state = 16;
     			        		}
     		        		}else if (tkn.equals(",") || tkn.equals("\"")) {
@@ -1081,6 +1076,19 @@ public class Scanner {
 						if(identifier.token_defined(tkn)){
 							identifier.addMap(tkn);
 							System.out.println("token " + tkn + " belongs to identifier");
+						}
+						// meet character
+						else if(tkn.equals("\'") && tokenBuf.get(i).get(j+2).equals("\'")){
+							
+							for(int s = j;s < j+3;s++){
+								char_token += tokenBuf.get(i).get(s);
+							}
+							j+=2;
+
+							character.addMap(char_token);
+							System.out.println("token " + char_token + " belongs to character");
+							char_token = "";
+							
 						}
 						// meet pointer
 						else if(tkn.equals("*") && compareIdentifier(tokenBuf.get(i).get(j+1))){
