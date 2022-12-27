@@ -3,8 +3,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Token{
-	private enum TokenType {ReservedWord, Library_name, Identifier, Character, Number, Pointer, Bracket, Operator, Comparator, Address, Punctuation, Format_specifier, Printed_token, Comment, Undefined_token, Skipped_token}
-
 	private Map<String, Integer> tokens = new HashMap<>();
 	private int amount = 0;
 
@@ -54,60 +52,4 @@ public class Token{
 		return this.tokens;
 	}
 
-	// show judgement process
-	public String Judgement_Process_Line(String token, String Type){
-		String judge = "token " + token + " belongs to ";
-		if(TokenType.ReservedWord.toString().equalsIgnoreCase(Type)){
-			judge += ("reserved word" + "\n");
-		}
-		else if(TokenType.Library_name.toString().equalsIgnoreCase(Type)){
-			judge += ("library name" + "\n");
-		}
-		else if(TokenType.Identifier.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Character.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Number.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Pointer.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Bracket.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Operator.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Comparator.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Address.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Punctuation.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Format_specifier.toString().equalsIgnoreCase(Type)){
-			judge += ("format specifier" + "\n");
-		}
-		else if(TokenType.Printed_token.toString().equalsIgnoreCase(Type)){
-			judge += ("printed token" + "\n");
-		}
-		else if(TokenType.Comment.toString().equalsIgnoreCase(Type)){
-			judge += (Type.toLowerCase() + "\n");
-		}
-		else if(TokenType.Undefined_token.toString().equalsIgnoreCase(Type)){
-			judge += ("undefined token" + "\n");
-		}
-		else if(TokenType.Skipped_token.toString().equalsIgnoreCase(Type)){
-			judge += ("skipped token" + "\n");
-		}
-		else{
-			judge += "Error\n";
-		}
-		return judge;
-	}
 } 
