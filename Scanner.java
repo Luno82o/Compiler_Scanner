@@ -142,6 +142,7 @@ public class Scanner {
 		boolean bool_endLine = true;
 		boolean bool_punctuation = false;
 		boolean bool_bracket = false;
+		boolean bool_case = false;
 
 		boolean bool_doWhile = false;
 		boolean bool_elseif = false;
@@ -248,6 +249,7 @@ public class Scanner {
 	    			}
 	    	        else if(compareString("case", tkn))  {
 	    	        	state = 11;
+	    	        	bool_case = true;
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
 	    	        }
@@ -279,6 +281,7 @@ public class Scanner {
 	        		else if(tkn.equals("/")) {
 						state = 15;
 	        			sa = "/";
+	        			
         			}
 					else if(tkn.equals("elseif")) {
 						if(bool_elseif){
@@ -388,7 +391,29 @@ public class Scanner {
         				
     				// main
         			case 1:
-						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
+        				if(!bool_bracket && tkn.equals("(")) {
+	    					bool_bracket = true;
+		        			bracket.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+        				}else if(bool_bracket){
+        					if(tkn.equals(")")) {
+    	    					bool_bracket = true;
+    		        			bracket.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+    		        		}else if(tkn.equals("{")) {
+    	    					bool_bracket = false;
+    		        			bracket.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+    		        		}else {
+    		        			undefinedToken.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "undefined");
+        						state = 16;
+    		        		}
+        				}else {
+		        			undefinedToken.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "undefined");
+    						state = 16;
+		        		}
         				break;
         				
         			// char
@@ -436,7 +461,11 @@ public class Scanner {
         				
         			// int
         			case 3:
-		        		if (!bool_punctuation) {
+        				if(tkn.equals("main")) {
+        					reservedWord.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "reserved");
+		        			state = 1;
+		        		} else if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
     		        			bool_punctuation = true;
@@ -867,13 +896,71 @@ public class Scanner {
         				
     				// switch 
         			case 10:
-	    	        	System.out.println("token "+tkn+" not classified yet");
-						Judgement += op.Judgement_Process_Line(tkn, "reserveword");
+        				if(!bool_bracket && tkn.equals("(")) {
+	    					bool_bracket = true;
+		        			bracket.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+        				}else if(bool_bracket){
+        					if (compareIdentifier(tkn)) {
+        						if(identifier.token_defined(tkn)) {
+        							identifier.addMap(tkn);
+        							Judgement += op.Judgement_Process_Line(tkn, "identifier");
+        						}else {
+        							undefinedToken.addMap(tkn);
+        							Judgement += op.Judgement_Process_Line(tkn, "undefined");
+            						state = 16;
+        						}
+        					}else if(tkn.equals(")")) {
+    	    					bool_bracket = true;
+    		        			bracket.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+    		        		}else if(tkn.equals("{")) {
+    	    					bool_bracket = false;
+    		        			bracket.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "bracket");
+    		        		}else {
+    		        			undefinedToken.addMap(tkn);
+    							Judgement += op.Judgement_Process_Line(tkn, "undefined");
+        						state = 16;
+    		        		}
+        				}else {
+		        			undefinedToken.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "undefined");
+    						state = 16;
+		        		}
         				break;
         				
     				// case 
         			case 11:
-					Judgement += op.Judgement_Process_Line(tkn, "reserveword");
+        				if (tkn.matches("[0-9]")||tkn.equals("\'")) {
+    						if(tkn.matches("[0-9]")) {
+    							number.addMap(tkn);
+    							System.out.println("token "+tkn+" belongs to number token");
+    						}else if(tkn.matches("\'")) {
+    							String s = tkn;
+    							for(int k=1; k<3;k++) {
+    								s+=tokenBuf.get(i).get(++j);
+    							}
+    							character.addMap(s);
+    							System.out.println("token "+s+" belongs to character token");
+    							
+    						}else{
+    							undefinedToken.addMap(tkn);
+        						System.out.println("token "+tkn+" belongs to undefined token");
+        						state = 16;
+    						}
+    					}else if(bool_case && tkn.equals(":")){
+	    					bool_bracket = true;
+		        			bracket.addMap(tkn);
+    						System.out.println("token "+tkn+" belongs to bracket token");
+
+    	    	        	bool_case = false;
+	    					bool_endLine = true;
+        				}else {
+		        			undefinedToken.addMap(tkn);
+    						System.out.println("token "+tkn+" belongs to undefined token");
+    						state = 16;
+		        		}
         				break;
         				
     				// printf 
