@@ -267,15 +267,14 @@ public class Scanner {
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
 	    	        } else if (tkn.equals("*")) {
-	        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+	        			String pointer_tmp = "";
+	    	        	pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+	    	        	
+	        			if(pointer.token_defined(pointer_tmp)) {
 	        				state = 14;
-		        			String pointer_tmp = "";
-
-    						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
-    						identifier.addMap(pointer_tmp);
-							Judgement += op.Judgement_Process_Line(pointer_tmp, "Identifier");
-		        			bool_punctuation = true;
-		        			
+	        				pointer.addMap(pointer_tmp);
+							Judgement += op.Judgement_Process_Line(pointer_tmp, "Pointer");
+							
 	        			} else {
 		        			undefinedToken.addMap(tkn);
 							Judgement += op.Judgement_Process_Line(tkn, "Undefined_token");
@@ -445,8 +444,8 @@ public class Scanner {
 	    		        			String pointer_tmp = "";
 
             						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
-            						identifier.addMap(pointer_tmp);
-									Judgement += op.Judgement_Process_Line(pointer_tmp, "Identifier");
+            						pointer.addMap(pointer_tmp);
+        							Judgement += op.Judgement_Process_Line(pointer_tmp, "Pointer");
 	    		        			bool_punctuation = true;
 	    		        			
     		        			}
