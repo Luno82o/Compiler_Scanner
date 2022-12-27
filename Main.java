@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.*;
-
 public class Main {	
     
 	public static void main(String[] args) {
@@ -11,9 +8,6 @@ public class Main {
         //輸入檔名
         System.out.println("filename(xxx.txt):");
 
-//        java.util.Scanner input = new java.util.Scanner(System.in);
-//        String filename = input.nextLine();
-//        input.close();
         String filename = "test2.txt";
         
 	    sc.readTxt(filename);

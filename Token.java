@@ -7,13 +7,8 @@ public class Token{
 
 	private Map<String, Integer> tokens = new HashMap<>();
 	private int amount = 0;
-	//private ArrayList<String> form = new ArrayList<>();
 
 	public Token(){}
-
-	// public Token(String line){
-
-	// }
 
     // 新增值到Map-tokens
     public void addMap(String token) {
@@ -45,14 +40,6 @@ public class Token{
 		}
 		return false;
 	}
-	// return 該種 Token 的 total 
-	// public int tokenType_num(){
-		
-	// 	for(Map.Entry<String, Integer> m : tokens.entrySet()){
-	// 		amount += m.getValue();
-	// 	}
-	// 	return amount;
-	// }
 
 	// get amount
 	public int get_Amount(){

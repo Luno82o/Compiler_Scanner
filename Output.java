@@ -89,14 +89,13 @@ public class Output {
             writer.close();
             
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
     public String Traverse_Token_Map(Map<String, Integer> token){
-
+        
         String output = "";
-
         for(Map.Entry<String, Integer> m : token.entrySet()){
             if(m.getValue() > 1){
                 output += (m.getKey() + " (x" + m.getValue() + ")\n");
@@ -104,7 +103,6 @@ public class Output {
                 output += (m.getKey() + "\n");
             }
         }
-
         return output;
     }
     
