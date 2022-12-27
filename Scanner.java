@@ -358,16 +358,22 @@ public class Scanner {
         			case 0:
         				// 判斷#後面是否為include
         				if(compareString("include", tkn)) {
-
+        					
         					// #後面是include
     						reservedWord.addMap("include");
 							Judgement += op.Judgement_Process_Line("include", "ReservedWord");
 
+							do {
+								j++;
+							} while (tokenBuf.get(i).get(j).equals(" "));
+        					
         					// 合併<xxx.h>
         					String library_tmp = "";
-        					int k;
-        					for(k=2 ; k<=6 ; k++)
-        						library_tmp = library_tmp + tokenBuf.get(i).get(k);
+        					
+        					for(int k=0 ; k<5 ; k++) {
+            					System.out.println(tokenBuf.get(i).get(j+k));
+    							library_tmp = library_tmp + tokenBuf.get(i).get(j+k);
+    						}
         					
         					// 判斷#include後面是否為<xxx.h>
         					Matcher mat_libname = ptn_libname.matcher(library_tmp);
@@ -376,23 +382,22 @@ public class Scanner {
         						libraryName.addMap(library_tmp);
         						Judgement += op.Judgement_Process_Line(library_tmp, "Library_Name");
         						// 結束換下一行
-        						j = k;
-        						bool_endLine = true;
-								j = tokenBuf.get(i).size()-1;
+        						j = j + 4;
         					} else {
         						// library格式不正確
-        						comparator.addMap(tkn);
-								Judgement += op.Judgement_Process_Line(tkn, "Comparator");
+//        						comparator.addMap(tkn);
+//								Judgement += op.Judgement_Process_Line(tkn, "Comparator");
 
         						// 取得並分類undefinedToken
         						String undefinedTokens = "";
         						int f = 3;
         						while(f < 6 && f < tokenBuf.get(i).size()) {
+        							if(tokenBuf.get(i).get(f).equals(" ")) break;
         							undefinedTokens = undefinedTokens + tokenBuf.get(i).get(f);
         							f++;
         						}
         						undefinedToken.addMap(undefinedTokens);
-								Judgement += op.Judgement_Process_Line(tkn, "Undefined_token");
+								Judgement += op.Judgement_Process_Line(undefinedTokens, "Undefined_token");
         						state = 16;
         					
         					}
