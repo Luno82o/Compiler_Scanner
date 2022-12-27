@@ -22,6 +22,8 @@ public class Scanner {
 	private static Token undefinedToken = new Token();
 	private static Token skippedToken = new Token();
 
+	private static String Judgement = "";
+
 	private ArrayList<String> operator_form = new ArrayList<String>(){
 		{
 			add("+");add("-");add("*");add("/");add("++");add("--");
@@ -166,34 +168,42 @@ public class Scanner {
 	        		if(compareString("#", tkn)) {
 	        			state = 0;
         				punctuation.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to punctuation");
+						// System.out.println("token "+tkn+" belongs to punctuation");
+						// Judgement += "token "+tkn+" belongs to punctuation\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "Punctuation");
 						
 	        		}
 	        		else if(compareString("main", tkn)) {
 	        			state = 1;
-	    	        	System.out.println("token "+tkn+" not classified yet");
-	        			
+	    	        	// System.out.println("token "+tkn+" not classified yet");
+	        			// Judgement += "token "+tkn+" not classified yet\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	        		}
 	        		else if(compareString("char", tkn)) {
 	        			state = 2;
         				bool_punctuation = false;
 	        			reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
-						
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	        		}
 	        		else if(compareString("int", tkn)) {
+
 	        			state = 3;
         				bool_punctuation = false;
 	        			reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
-						
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
+
 	        		}
 	        		else if(compareString("float", tkn)) {
 	        			state = 4;
         				bool_punctuation = false;
 	        			reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
-						
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	        		}
 	        		else if(compareString("if", tkn)) {
 	        			state = 5;
@@ -203,13 +213,17 @@ public class Scanner {
 						bool_else = true;
 
 						reservedWord.addMap(tkn);
-						System.out.println("token " + tkn + "belongs to reserved word");
+						// System.out.println("token " + tkn + "belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 
 	        		}
 	        		else if(compareString("for", tkn))  {
 	        			state = 6;
 	        			reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	        			
 						bool_bracket = true;
 						bool_punctuation = false;
@@ -217,7 +231,9 @@ public class Scanner {
 	        		else if(compareString("while", tkn))  {
 	        			state = 7;
 						reservedWord.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to reserved word");
+						// System.out.println("token " + tkn + " belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 						
 						bool_bracket = true;
 						bool_punctuation = false;
@@ -226,7 +242,9 @@ public class Scanner {
 	        		else if(compareString("do", tkn))  {
 	    				state = 8;
 						reservedWord.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to reserved word");
+						// System.out.println("token " + tkn + " belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    				
 						bool_bracket = true;
 						bool_punctuation = false;
@@ -235,41 +253,55 @@ public class Scanner {
 	    			else if(compareString("return", tkn))  {
 	    				state = 9;
 						reservedWord.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to reserved word");
+						// System.out.println("token " + tkn + " belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    				
 	    			}
 	    			else if(compareString("switch", tkn)) {
 	    				state = 10;
-	    	        	System.out.println("token "+tkn+" not classified yet");
+	    	        	// System.out.println("token "+tkn+" not classified yet");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    				
 	    			}
 	    	        else if(compareString("case", tkn))  {
 	    	        	state = 11;
-	    	        	System.out.println("token "+tkn+" not classified yet");
+	    	        	// System.out.println("token "+tkn+" not classified yet");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
 	    	        }
 	    	        else if(compareString("printf", tkn))   {
 	    	        	state = 12;
 	    	        	bool_bracket = false;
 	    	        	reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
 	    	        }
 	    	        else if(compareString("scanf", tkn)) {
 	    	        	state = 13;
 	    	        	bool_bracket = false;
 	    	        	reservedWord.addMap(tkn);
-						System.out.println("token "+tkn+" belongs to reserved word");
+						// System.out.println("token "+tkn+" belongs to reserved word");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
 	    	        }
 	    	        else if(identifier.token_defined(tkn)) {
 						state = 14;
 						identifier.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to identifier");
+						// System.out.println("token " + tkn + " belongs to identifier");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "Identifier");
 					}
 	    	        else if(bool_bracket && tkn.equals("}")){
 						bracket.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to bracket");
+						// System.out.println("token " + tkn + " belongs to bracket");
+						// Judgement += "token "+tkn+" belongs to bracket\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "Bracket");
 						
 	    	        	bool_endLine = true;
 					}
@@ -281,11 +313,16 @@ public class Scanner {
 						if(bool_elseif){
 							state = 17;
 							reservedWord.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to reserved word");
+							// System.out.println("token " + tkn + " belongs to reserved word");
+							// Judgement += "token "+tkn+" belongs to reserved word\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
+
 						}
 						else{
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							// Judgement += "token "+tkn+" belongs to undefined token\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
 							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
@@ -297,7 +334,9 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							// Judgement += "token "+skipped_token+" belongs to skipped token\n";
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "Skipped_token");
 						}
 					}
 					else if(tkn.equals("else")) {
@@ -305,11 +344,14 @@ public class Scanner {
 							state = 18;
 							reservedWord.addMap(tkn);
 							bool_bracket = true;
-							System.out.println("token " + tkn + " belongs to reserved word");
+							// System.out.println("token " + tkn + " belongs to reserved word");
+							// Judgement += "token "+tkn+" belongs to reserved word\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
 						}
 						else{
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							// Judgement += "token "+tkn+" belongs to undefined token\n";
 							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
@@ -321,7 +363,9 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							// Judgement += "token "+skipped_token+" belongs to skipped token\n";
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "Skipped_token");
 						}
 						
 					}
@@ -329,7 +373,10 @@ public class Scanner {
 	    	        else {
 						state = 16;
 						undefinedToken.addMap(tkn);
-						System.out.println("token " + tkn + " belongs to undefined token");
+						// System.out.println("token " + tkn + " belongs to undefined token");
+						// Judgement += "token "+tkn+" belongs to undefined token\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
+
 	    	        }
 	        		continue;
 				}
@@ -345,7 +392,9 @@ public class Scanner {
 
         					// #後面是include
     						reservedWord.addMap("include");
-    						System.out.println("token include belongs to reserved word");
+    						// System.out.println("token include belongs to reserved word");
+							// Judgement += "token include belongs to reserved word\n";
+							Judgement += punctuation.Judgement_Process_Line("include", "ReservedWord");
 
         					// 合併<xxx.h>
         					String library_tmp = "";
@@ -358,8 +407,9 @@ public class Scanner {
         					if(mat_libname.matches()) {
         						// token格式為:<xxx.h>
         						libraryName.addMap(library_tmp);
-        						System.out.println("token "+library_tmp+" belongs to library name");
-        						
+        						// System.out.println("token "+library_tmp+" belongs to library name");
+								// Judgement += "token "+library_tmp+" belongs to library name\n";
+        						Judgement += punctuation.Judgement_Process_Line(library_tmp, "Library_Name");
         						// 結束換下一行
         						j = k;
         						bool_endLine = true;
@@ -367,7 +417,9 @@ public class Scanner {
         					} else {
         						// library格式不正確
         						comparator.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to comparator");
+        						// System.out.println("token "+tkn+" belongs to comparator");
+								// Judgement += "token "+tkn+" belongs to comparator\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Comparator");
 
         						// 取得並分類undefinedToken
         						String undefinedTokens = "";
@@ -377,20 +429,26 @@ public class Scanner {
         							f++;
         						}
         						undefinedToken.addMap(undefinedTokens);
-        						System.out.println("token "+undefinedTokens+" belongs to undefined token");
+        						// System.out.println("token "+undefinedTokens+" belongs to undefined token");
+								// Judgement += "token "+tkn+" belongs to undefined token\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
         						state = 16;
         					
         					}
         				} else {
         					undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							// Judgement += "token "+tkn+" belongs to undefined token\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
     						state = 16;
         				}
         				break;
         				
     				// main
         			case 1:
-	    	        	System.out.println("token "+tkn+" not classified yet");
+	    	        	// System.out.println("token "+tkn+" not classified yet");
+						// Judgement += "token "+tkn+" belongs to reserved word\n";
+						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
         				break;
         				
         			// char
@@ -398,7 +456,9 @@ public class Scanner {
 		        		if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to identifier");
+        						// System.out.println("token "+tkn+" belongs to identifier");
+								// Judgement += "token "+tkn+" belongs to identifier\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Identifier");
     		        			bool_punctuation = true;
 
     		        			
@@ -408,31 +468,39 @@ public class Scanner {
 
             						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						identifier.addMap(pointer_tmp);
-            						System.out.println("token "+pointer_tmp+" belongs to identifier");
+            						// System.out.println("token "+pointer_tmp+" belongs to identifier");
+									// Judgement += "token "+pointer_tmp+" belongs to identifier\n";
+									Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "Identifier");
 	    		        			bool_punctuation = true;
 	    		        			
     		        			}
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+        						// System.out.println("token "+tkn+" belongs to undefined token");
+								// Judgement += "token "+tkn+" belongs to undefined token\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
         						state = 16;
     		        		}
     		        		
 		        		} else if(tkn.equals(",")){
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
-	        				System.out.println("token " + tkn + " belongs to punctuation");
+	        				// System.out.println("token " + tkn + " belongs to punctuation");
+							// Judgement += "token "+tkn+" belongs to punctuation\n";
 
 		        		} else if(tkn.equals(";")) {
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
-	        				System.out.println("token " + tkn + " belongs to punctuation");
-
+	        				// System.out.println("token " + tkn + " belongs to punctuation");
+							// Judgement += "token "+tkn+" belongs to punctuation\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 	        				bool_endLine = true;
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							// Judgement += "token "+tkn+" belongs to undefined token\n";
+							Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
     						state = 16;
 		        		}
         				break;
@@ -445,7 +513,10 @@ public class Scanner {
         						// System.out.println("token "+tkn+" belongs to identifier token");
     		        			bool_punctuation = true;
 
-								System.out.println("token " + tkn + " belongs to identifier");
+								// System.out.println("token " + tkn + " belongs to identifier");
+								// Judgement += "token "+tkn+" belongs to identifier\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Identifier");
+								
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
@@ -453,14 +524,18 @@ public class Scanner {
             						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						pointer.addMap(pointer_tmp);
 
-									System.out.println("token " + pointer_tmp + " belongs to pointer");
+									// System.out.println("token " + pointer_tmp + " belongs to pointer");
+									// Judgement += "token "+pointer_tmp+" belongs to pointer\n";
+									Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "pointer");
 
 	    		        			bool_punctuation = true;
     		        			}
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+        						// System.out.println("token "+tkn+" belongs to undefined token");
+								// Judgement += "token "+tkn+" belongs to undefined token\n";
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Undefined_token");
         						state = 16;
     		        		}
     		        		
@@ -468,19 +543,21 @@ public class Scanner {
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
 
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 
 		        			
 		        		} else if(tkn.equals(";")) {
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to punctuation");
-
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 	        				bool_endLine = true;
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     						state = 16;
 		        		}
         				break;
@@ -490,7 +567,8 @@ public class Scanner {
 		        		if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to identifier");
+        						// System.out.println("token "+tkn+" belongs to identifier");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "Identifier");
     		        			bool_punctuation = true;
     		        			
     		        		} else if (tkn.equals("*")) {
@@ -499,14 +577,16 @@ public class Scanner {
             						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						pointer.addMap(pointer_tmp);
 
-									System.out.println("token " + pointer_tmp + " belongs to pointer");
+									// System.out.println("token " + pointer_tmp + " belongs to pointer");
+									Judgement += punctuation.Judgement_Process_Line(tkn, "pointer");
 
 	    		        			bool_punctuation = true;
     		        			}
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+        						// System.out.println("token "+tkn+" belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
         						state = 16;
     		        		}
     		        		
@@ -514,18 +594,22 @@ public class Scanner {
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
 
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
+
 		        			
 		        		} else if(tkn.equals(";")) {
 	        				bool_punctuation = false;
 	        				punctuation.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 
 	        				bool_endLine = true;
 	        				
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     						state = 16;
 		        		}
         				break;
@@ -546,7 +630,9 @@ public class Scanner {
 
 							if(mat_identifier.matches()){
 								identifier.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to identifier");
+								// System.out.println("token " + tkn + " belongs to identifier");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
+								
 
 							}else if(operator_form.contains(tkn)){
 
@@ -558,25 +644,29 @@ public class Scanner {
 								// 	bool_punctuation = false;
 								// }
 								operator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to operator");
+								// System.out.println("token " + tkn + " belongs to operator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 
 							}else if(comparator_form.contains(tkn)){
 								
 								comparator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to comparator");
+								// System.out.println("token " + tkn + " belongs to comparator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "comparator");
 
 							}else if(ptn_number.matcher(tkn).matches()){
 
 								number.addMap(tkn);
 								bool_punctuation = false;
 								bool_bracket = true;
-								System.out.println("token " + tkn + " belongs to number");
+								// System.out.println("token " + tkn + " belongs to number");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 
 							}else{
 
 								undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
-								System.out.println("token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+								// System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
 
@@ -587,7 +677,9 @@ public class Scanner {
 
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
+								// System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
+								
 
 							}
 						}
@@ -596,8 +688,8 @@ public class Scanner {
 
 							punctuation.addMap(tkn);
 							bool_punctuation = false;
-							System.out.println("token " + tkn + " belongs to punctuation");
-
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 						}
 						// meet bracket( "(", ")", "{")
 						else if(bool_bracket && !bool_punctuation && bracket_form.contains(tkn)){
@@ -614,13 +706,15 @@ public class Scanner {
 
 							}
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to bracket");
+							// System.out.println("token " + tkn + " belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 
 						}else{
 
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
-							System.out.println("token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
 
@@ -631,7 +725,8 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 						}
 
 						bool_elseif = true;
@@ -656,7 +751,8 @@ public class Scanner {
 							
 							if(mat_identifier.matches()){
 								identifier.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to identifier");
+								// System.out.println("token " + tkn + " belongs to identifier");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
 
 							}else if(operator_form.contains(tkn)){
 
@@ -668,24 +764,28 @@ public class Scanner {
 									bool_punctuation = false;
 								}
 								operator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to operator");
+								// System.out.println("token " + tkn + " belongs to operator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 
 							}else if(comparator_form.contains(tkn)){
 								
 								comparator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to comparator");
+								// System.out.println("token " + tkn + " belongs to comparator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "comparator");
 
 							}else if(ptn_number.matcher(tkn).matches()){
 
 								number.addMap(tkn);
 								bool_punctuation = true;
 								bool_bracket = false;
-								System.out.println("token " + tkn + " belongs to number");
+								// System.out.println("token " + tkn + " belongs to number");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 
 							}else{
 
 								undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
 								System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
@@ -697,8 +797,8 @@ public class Scanner {
 
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
-
+								// System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 							}
 						}
 						// meet punctuation
@@ -706,7 +806,8 @@ public class Scanner {
 
 							punctuation.addMap(tkn);
 							bool_punctuation = false;
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 
 						}
 						// meet bracket( "(", ")", "{")
@@ -724,13 +825,15 @@ public class Scanner {
 
 							}
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to bracket");
+							// System.out.println("token " + tkn + " belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 
 						}else{
 
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
-							System.out.println("token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined token");
+							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
 
@@ -741,7 +844,8 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped token");
 
 						}
 
@@ -765,7 +869,8 @@ public class Scanner {
 							if(mat_identifier.matches()){
 
 								identifier.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to identifier");
+								// System.out.println("token " + tkn + " belongs to identifier");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
 
 							}else if(operator_form.contains(tkn)){
 
@@ -777,25 +882,29 @@ public class Scanner {
 								// 	bool_punctuation = false;
 								// }
 								operator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to operator");
+								// System.out.println("token " + tkn + " belongs to operator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 
 							}else if(comparator_form.contains(tkn)){
 								
 								comparator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to comparator");
+								// System.out.println("token " + tkn + " belongs to comparator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "comparator");
 
 							}else if(ptn_number.matcher(tkn).matches()){
 
 								number.addMap(tkn);
 								bool_punctuation = false;
 								bool_bracket = true;
-								System.out.println("token " + tkn + " belongs to number");
+								// System.out.println("token " + tkn + " belongs to number");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 
 							}else{
 
 								undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
-								System.out.println("token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+								// System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
 
@@ -806,8 +915,8 @@ public class Scanner {
 
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
-
+								// System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 							}
 						}
 						// meet punctuation
@@ -815,8 +924,8 @@ public class Scanner {
 
 							punctuation.addMap(tkn);
 							bool_punctuation = false;
-							System.out.println("token " + tkn + " belongs to punctuation");
-
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 						}
 						// meet bracket( "(", ")", "{")
 						else if(bool_bracket && !bool_punctuation && bracket_form.contains(tkn)){
@@ -838,13 +947,15 @@ public class Scanner {
 
 							}
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to bracket");
+							// System.out.println("token " + tkn + " belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 
 						}else{
 
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
-							System.out.println("token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
 
@@ -855,7 +966,8 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 
 						}
 
@@ -867,7 +979,8 @@ public class Scanner {
 						if(bool_bracket && bracket_form.contains(tkn)){
 
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + "belongs to bracket");
+							// System.out.println("token " + tkn + "belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 							bool_doWhile = true;
 							bool_bracket = false;
 							bool_punctuation = true;
@@ -875,8 +988,9 @@ public class Scanner {
 						}else{
 
 							undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
-								System.out.println("token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+								// System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
 									// skippedToken.addMap("skip token");
@@ -885,7 +999,8 @@ public class Scanner {
 									j++;
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
+								// System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 
 						}
 
@@ -897,22 +1012,26 @@ public class Scanner {
 						// meet number
 						if(mat_number.matches()){
 							number.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to number");
+							// System.out.println("token " + tkn + " belongs to number");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 						}
 						else if(identifier.token_defined(tkn)){
 							identifier.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to identifier");
+							// System.out.println("token " + tkn + " belongs to identifier");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
 						}
 						// meet punctuation ";"
 						else if(tkn.equals(";")){
 							punctuation.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 							bool_endLine = true;
 						}
 						// meet undefined
 						else{
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
 							state = 16;
 						}
         				break;
@@ -920,11 +1039,12 @@ public class Scanner {
     				// switch 
         			case 10:
 	    	        	System.out.println("token "+tkn+" not classified yet");
+						Judgement += punctuation.Judgement_Process_Line(tkn, "reserveword");
         				break;
         				
     				// case 
         			case 11:
-	    	        	System.out.println("token "+tkn+" not classified yet");
+					Judgement += punctuation.Judgement_Process_Line(tkn, "reserveword");
         				break;
         				
     				// printf 
@@ -932,17 +1052,20 @@ public class Scanner {
         				if(!bool_bracket && tkn.equals("(")) {
 	    					bool_bracket = true;
 		        			bracket.addMap(tkn);
-							System.out.println("token "+tkn+" belongs to bracket token");
+							// System.out.println("token "+tkn+" belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 	        			
         				} else if(bool_bracket){
         					if (compareIdentifier(tkn)) {
     		        			if(tokenBuf.get(i).get(j-2).equals(",")) {
     		        				identifier.addMap(tkn);
-    	    						System.out.println("token "+tkn+" belongs to identifier token");
+    	    						// System.out.println("token "+tkn+" belongs to identifier");
+									Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
     	    						
     		        			} else {
     		        				printedToken.addMap(tkn);
-    	    						System.out.println("token "+tkn+" belongs to printed token");
+    	    						// System.out.println("token "+tkn+" belongs to printed token");
+									Judgement += punctuation.Judgement_Process_Line(tkn, "printed_token");
     	    						
     		        			}
     		        		} else if (tkn.equals("%")||tkn.equals("\\")) {
@@ -950,38 +1073,45 @@ public class Scanner {
     		        				String pointer_tmp = "";
             						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
             						formatSpecifier.addMap(pointer_tmp);
-    	    						System.out.println("token "+pointer_tmp+" belongs to format specifier token");
+    	    						// System.out.println("token "+pointer_tmp+" belongs to format specifier token");
+									Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "specifier_token");
             		        		j++;
             		        		
     		        			} else {
     			        			undefinedToken.addMap(tkn);
-    	    						System.out.println("token "+tkn+" belongs to undefined token");
+    	    						// System.out.println("token "+tkn+" belongs to undefined token");
+									Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     	    						state = 16;
     	    						
     			        		}
     		        		}else if (tkn.equals(",") || tkn.equals("\"")) {
     		        			punctuation.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to punctuation token");
+        						// System.out.println("token "+tkn+" belongs to punctuation");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
         						
     		        		}else if(tkn.equals(")")) {
     	    					bool_bracket = false;
     		        			bracket.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to bracket token");
+        						// System.out.println("token "+tkn+" belongs to bracket");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
     		        			
     		        		}else {
     		        			undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+        						// System.out.println("token "+tkn+" belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
         						state = 16;
         						
     		        		}
         				} else if (tkn.equals(";")) {
 		        			punctuation.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to punctuation token");
+    						// System.out.println("token "+tkn+" belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
     						bool_endLine = true;
     						
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     						state = 16;
     						
 		        		}
@@ -1006,7 +1136,8 @@ public class Scanner {
     	        				for(int k=0 ; k<s.length() ; k++) {
     	        					if(k==0 && compareString("([cdf])", String.valueOf(fst)) ) {
     	        						formatSpecifier.addMap(pointer_tmp);
-    	        						System.out.println("token "+pointer_tmp+" belongs to format specifier token");
+    	        						// System.out.println("token "+pointer_tmp+" belongs to format specifier token");
+										Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "specifier_token");
     	        					
     	        					} else { 
     	        						undefined = true;
@@ -1017,7 +1148,8 @@ public class Scanner {
     	        				
     	        				if(undefined) {
 	    	        				undefinedToken.addMap(a);
-	        						System.out.println("token "+a+" belongs to undefined token");
+	        						// System.out.println("token "+a+" belongs to undefined token");
+									Judgement += punctuation.Judgement_Process_Line(a, "undefined_token");
 	        						state = 16;
     	        				}
     		        		}else if(tkn.equals("&")) {
@@ -1025,43 +1157,51 @@ public class Scanner {
     		        				String pointer_tmp = "";
             						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
             						address.addMap(pointer_tmp);
-            						System.out.println("token "+pointer_tmp+" belongs to address token");
+            						// System.out.println("token "+pointer_tmp+" belongs to address");
+									Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "address");
             		        		j++;
             		        		
     		        			} else {
 									String undefindString = "";
 									undefindString = tkn + tokenBuf.get(i).get(++j);
     			        			undefinedToken.addMap(undefindString);
-    	    						System.out.println("token "+undefindString+" belongs to undefined token");
+    	    						// System.out.println("token "+undefindString+" belongs to undefined token");
+									Judgement += punctuation.Judgement_Process_Line(undefindString, "undefined_token");
     	    						state = 16;
     			        		}
     		        		}else if (tkn.equals(",") || tkn.equals("\"")) {
     		        			punctuation.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to punctuation token");
+        						// System.out.println("token "+tkn+" belongs to punctuation token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
     		        			
     		        		}else if(tkn.equals(";")){
     		        			punctuation.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to punctuation token");
+        						// System.out.println("token "+tkn+" belongs to punctuation token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
     		        			bool_endLine = true;
     		        			
     		        		}else if(tkn.equals(")")) {
     		        			bracket.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to bracket token");
+        						// System.out.println("token "+tkn+" belongs to bracket");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
     		        			bool_bracket = false;
     		        			
     		        		} else {
     		        			undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+        						// System.out.println("token "+tkn+" belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
         						state = 16;
     		        		}
         					
         				} else if (tkn.equals(";")) {
 		        			punctuation.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to punctuation token");
+    						// System.out.println("token "+tkn+" belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
     						bool_endLine = true;
 		        		} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     						state = 16;
 		        		}
         				break;
@@ -1072,7 +1212,8 @@ public class Scanner {
 						// meet identifier
 						if(identifier.token_defined(tkn)){
 							identifier.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to identifier");
+							// System.out.println("token " + tkn + " belongs to identifier");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
 						}
 						// meet character
 						else if(tkn.equals("\'") && tokenBuf.get(i).get(j+2).equals("\'")){
@@ -1083,7 +1224,8 @@ public class Scanner {
 							j+=2;
 
 							character.addMap(char_token);
-							System.out.println("token " + char_token + " belongs to character");
+							// System.out.println("token " + char_token + " belongs to character");
+							Judgement += punctuation.Judgement_Process_Line(char_token, "character");
 							char_token = "";
 							
 						}
@@ -1095,10 +1237,12 @@ public class Scanner {
 							// ia = 5 * ie; => "*" 視為operator, "ie" 視為 undefined token
 							if(tokenBuf.get(i).get(j+1).equals(" ")){
 								operator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to operator");
+								// System.out.println("token " + tkn + " belongs to operator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 								j+=2;
 								undefinedToken.addMap(tokenBuf.get(i).get(j));
-								System.out.println("token " + tokenBuf.get(i).get(j) + " belongs to undefined token");
+								// System.out.println("token " + tokenBuf.get(i).get(j) + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tokenBuf.get(i).get(j), "undefined_token");
 								state = 16;
 								break;
 							}
@@ -1108,14 +1252,16 @@ public class Scanner {
 							if(pointer.get_TokenMap().containsKey(pointer_tmp)){
 								
 								pointer.addMap(pointer_tmp);
-								System.out.println("token " + pointer_tmp + " belongs to pointer");
+								// System.out.println("token " + pointer_tmp + " belongs to pointer");
+								Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "pointer");
 								j++;
 							}
 							// pointer 沒有先宣告
 							else{
 
 								undefinedToken.addMap(pointer_tmp);
-								System.out.println("token " + pointer_tmp + " belongs to undefined token");
+								// System.out.println("token " + pointer_tmp + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(pointer_tmp, "undefined_token");
 								j++;
 								state = 16;
 							}
@@ -1124,12 +1270,14 @@ public class Scanner {
 						// meet operator
 						else if(operator_form.contains(tkn)){
 							operator.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to operator");
+							// System.out.println("token " + tkn + " belongs to operator");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 						}
 						// meet punctuation ";"
 						else if(tkn.equals(";")){
 							punctuation.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 							bool_endLine = true;
 						}
 						// meet bracket
@@ -1137,7 +1285,8 @@ public class Scanner {
 							// meet left bracket
 							if(!bool_bracket){
 								bracket.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to bracket");
+								// System.out.println("token " + tkn + " belongs to bracket");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 								bool_bracket = true;
 								bracket_check = bracket_form.indexOf(tkn);
 							}
@@ -1153,7 +1302,8 @@ public class Scanner {
 								// correct right bracket
 								else{
 									bracket.addMap(tkn);
-									System.out.println("token " + tkn + " belongs to bracket");
+									// System.out.println("token " + tkn + " belongs to bracket");
+									Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 									bool_bracket = false;
 								}
 							}
@@ -1165,12 +1315,14 @@ public class Scanner {
 							// meet number
 							if(mat_number.matches()){
 								number.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to number");
+								// System.out.println("token " + tkn + " belongs to number");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 							}
 							// meet undefined
 							else{
 								undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
 								state = 16;
 							}
 						}
@@ -1182,11 +1334,13 @@ public class Scanner {
 	        				while(j < tokenBuf.get(i).size())
 		        				sa += tokenBuf.get(i).get(j++);
 		        			comment.addMap(sa);
-    						System.out.println("token "+sa+" belongs to comment");
+    						// System.out.println("token "+sa+" belongs to comment");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "comment");
     						
 	        			} else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+    						// System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
     						state = 16;
     						
 		        		}
@@ -1202,8 +1356,10 @@ public class Scanner {
 						}
 
 						skippedToken.addMap(skip_tmp);
-						System.out.println("token "+skip_tmp+" belongs to skipped token");
+						// System.out.println("token "+skip_tmp+" belongs to skipped token");
+						Judgement += punctuation.Judgement_Process_Line(skip_tmp, "skipped_token");
 						bool_endLine = true;
+						
         				break;
         			
 					// elseif
@@ -1223,7 +1379,8 @@ public class Scanner {
 
 							if(mat_identifier.matches()){
 								identifier.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to identifier");
+								// System.out.println("token " + tkn + " belongs to identifier");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "identifier");
 
 							}else if(operator_form.contains(tkn)){
 
@@ -1235,25 +1392,29 @@ public class Scanner {
 									bool_punctuation = false;
 								}
 								operator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to operator");
+								// System.out.println("token " + tkn + " belongs to operator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
 
 							}else if(comparator_form.contains(tkn)){
 								
 								comparator.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to comparator");
+								// System.out.println("token " + tkn + " belongs to comparator");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "comparator");
 
 							}else if(ptn_number.matcher(tkn).matches()){
 
 								number.addMap(tkn);
 								bool_punctuation = true;
 								bool_bracket = false;
-								System.out.println("token " + tkn + " belongs to number");
+								// System.out.println("token " + tkn + " belongs to number");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 
 							}else{
 
 								undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
-								System.out.println("token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+								// System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
 
@@ -1264,7 +1425,7 @@ public class Scanner {
 
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 
 							}
 						}
@@ -1273,7 +1434,8 @@ public class Scanner {
 
 							punctuation.addMap(tkn);
 							bool_punctuation = false;
-							System.out.println("token " + tkn + " belongs to punctuation");
+							// System.out.println("token " + tkn + " belongs to punctuation");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "punctuation");
 
 						}
 						// meet bracket( "(", ")", "{")
@@ -1291,13 +1453,15 @@ public class Scanner {
 
 							}
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to bracket");
+							// System.out.println("token " + tkn + " belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 
 						}else{
 
 							undefinedToken.addMap(tkn);
-							System.out.println("token " + tkn + " belongs to undefined token");
-							System.out.println("token");
+							// System.out.println("token " + tkn + " belongs to undefined token");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
+							// System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
 
@@ -1308,7 +1472,8 @@ public class Scanner {
 
 							}
 							skippedToken.addMap(skipped_token);
-							System.out.println("token " + skipped_token + " belongs to skipped token");
+							// System.out.println("token " + skipped_token + " belongs to skipped token");
+							Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 
 						}
 
@@ -1318,7 +1483,8 @@ public class Scanner {
 						if(bool_bracket && bracket_form.contains(tkn)){
 
 							bracket.addMap(tkn);
-							System.out.println("token " + tkn + "belongs to bracket");
+							// System.out.println("token " + tkn + "belongs to bracket");
+							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
 			
 							bool_bracket = false;
 							bool_elseif = false;
@@ -1328,7 +1494,8 @@ public class Scanner {
 						else{
 
 							undefinedToken.addMap(tkn);
-								System.out.println("token " + tkn + " belongs to undefined token");
+								// System.out.println("token " + tkn + " belongs to undefined token");
+								Judgement += punctuation.Judgement_Process_Line(tkn, "undefined_token");
 								System.out.println("token");
 								String skipped_token = null;
 								while((j+1) < tokenBuf.get(i).size()) {
@@ -1338,7 +1505,7 @@ public class Scanner {
 									j++;
 								}
 								skippedToken.addMap(skipped_token);
-								System.out.println("token " + skipped_token + " belongs to skipped token");
+								Judgement += punctuation.Judgement_Process_Line(skipped_token, "skipped_token");
 
 						}
 						break;
@@ -1535,6 +1702,11 @@ public class Scanner {
 		return skippedToken.get_Amount();
 	}
 
+
+	public String get_Judgement(){
+		System.out.println(Judgement);
+		return Judgement;
+	}
 }
 
 //System.out.println(valueName.getClass().getSimpleName());		//取得變數的type

@@ -4,22 +4,7 @@ import java.util.Map;
 public class Output {
     
     public Output(){}
-    
-    // public void File_Write_TotalToken(){
-    //     Scanner scanner = new Scanner();
-
-    //     try {
-
-    //         FileWriter writer = new FileWriter("output.txt");
-    //         writer.write("Total: " + scanner.total_token() + "tokens\n");
-    //         writer.close();
-
-    //     } catch (Exception e) {
-    //         // TODO: handle exception
-
-    //     }
-        
-    // }
+   
 
     public void WriteFile(){
         
@@ -30,7 +15,9 @@ public class Output {
             FileWriter writer = new FileWriter("output.txt");
             
             writer.write(lineC + ".\t\n");
-            
+            System.out.println(sc.get_Judgement());
+            writer.write(sc.get_Judgement() + "\n\n\n");
+
             
             writer.write("Total: " + sc.total_token() + " tokens\n");
 
@@ -120,7 +107,5 @@ public class Output {
 
         return output;
     }
-    // public void WriteFile_Total(){
-
-    // }
+    
 }
