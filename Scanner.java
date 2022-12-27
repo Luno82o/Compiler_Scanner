@@ -398,10 +398,9 @@ public class Scanner {
 		        		if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to identifier token");
+        						System.out.println("token "+tkn+" belongs to identifier");
     		        			bool_punctuation = true;
 
-								System.out.println("token " + tkn + " belongs to identifier");
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
@@ -409,7 +408,7 @@ public class Scanner {
 
             						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
             						identifier.addMap(pointer_tmp);
-            						System.out.println("token "+pointer_tmp+" belongs to identifier token");
+            						System.out.println("token "+pointer_tmp+" belongs to identifier");
 	    		        			bool_punctuation = true;
 	    		        			
     		        			}
@@ -491,10 +490,8 @@ public class Scanner {
 		        		if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
     		        			identifier.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to identifier token");
+        						System.out.println("token "+tkn+" belongs to identifier");
     		        			bool_punctuation = true;
-
-								System.out.println("token " + tkn + " belongs to identifier");
     		        			
     		        		} else if (tkn.equals("*")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
@@ -1091,12 +1088,38 @@ public class Scanner {
 							
 						}
 						// meet pointer
-						else if(tkn.equals("*") && compareIdentifier(tokenBuf.get(i).get(j+1))){
-							String pointer_tmp = "";
-							pointer_tmp = tkn + tokenBuf.get(i).get(++j);
-							pointer.addMap(pointer_tmp);
+						else if(tkn.equals("*")){
 
-							System.out.println("token " + pointer_tmp + " belongs to pointer");
+							String pointer_tmp = "";
+
+							// ia = 5 * ie; => "*" 視為operator, "ie" 視為 undefined token
+							if(tokenBuf.get(i).get(j+1).equals(" ")){
+								operator.addMap(tkn);
+								System.out.println("token " + tkn + " belongs to operator");
+								j+=2;
+								undefinedToken.addMap(tokenBuf.get(i).get(j));
+								System.out.println("token " + tokenBuf.get(i).get(j) + " belongs to undefined token");
+								state = 16;
+								break;
+							}
+							
+							pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+							// pointer 有先宣告
+							if(pointer.get_TokenMap().containsKey(pointer_tmp)){
+								
+								pointer.addMap(pointer_tmp);
+								System.out.println("token " + pointer_tmp + " belongs to pointer");
+								j++;
+							}
+							// pointer 沒有先宣告
+							else{
+
+								undefinedToken.addMap(pointer_tmp);
+								System.out.println("token " + pointer_tmp + " belongs to undefined token");
+								j++;
+								state = 16;
+							}
+							
 						}
 						// meet operator
 						else if(operator_form.contains(tkn)){
@@ -1159,7 +1182,7 @@ public class Scanner {
 	        				while(j < tokenBuf.get(i).size())
 		        				sa += tokenBuf.get(i).get(j++);
 		        			comment.addMap(sa);
-    						System.out.println("token "+sa+" belongs to comment token");
+    						System.out.println("token "+sa+" belongs to comment");
     						
 	        			} else {
 		        			undefinedToken.addMap(tkn);
