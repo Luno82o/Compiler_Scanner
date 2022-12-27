@@ -201,6 +201,7 @@ public class Scanner {
 	        			bool_bracket = true;
 						bool_elseif = true;
 						bool_else = true;
+						bool_punctuation = false;
 
 						reservedWord.addMap(tkn);
 						Judgement += punctuation.Judgement_Process_Line(tkn, "ReservedWord");
@@ -1039,14 +1040,34 @@ public class Scanner {
 							String pointer_tmp = "";
 
 							// ia = 5 * ie; => "*" 視為operator, "ie" 視為 undefined token
+							// c = a * 2; 
 							if(tokenBuf.get(i).get(j+1).equals(" ")){
+								mat_number = ptn_number.matcher(tokenBuf.get(i).get(j+2));
 								operator.addMap(tkn);
-								Judgement += punctuation.Judgement_Process_Line(tkn, "operator");
+								Judgement += operator.Judgement_Process_Line(tkn, "operator");
 								j+=2;
-								undefinedToken.addMap(tokenBuf.get(i).get(j));
-								Judgement += punctuation.Judgement_Process_Line(tokenBuf.get(i).get(j), "undefined_token");
-								state = 16;
-								break;
+								// 若 * 後為數字
+								if(mat_number.matches()){
+									number.addMap(tokenBuf.get(i).get(j));
+									Judgement += number.Judgement_Process_Line(tokenBuf.get(i).get(j), "number");
+									break;
+								}
+								// 若 * 後為 idetifier
+								else{
+									// identifier 有宣告
+									if(identifier.get_TokenMap().containsKey(tokenBuf.get(i).get(j))){
+										identifier.addMap(tokenBuf.get(i).get(j));
+										Judgement += identifier.Judgement_Process_Line(tokenBuf.get(i).get(j), "identifier");
+										break;
+									}
+									// identifier 沒有宣告
+									else{
+										undefinedToken.addMap(tokenBuf.get(i).get(j));
+										Judgement += punctuation.Judgement_Process_Line(tokenBuf.get(i).get(j), "undefined_token");
+										state = 16;
+										break;
+									}
+								}
 							}
 							
 							pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
@@ -1189,8 +1210,8 @@ public class Scanner {
 							}else if(ptn_number.matcher(tkn).matches()){
 
 								number.addMap(tkn);
-								bool_punctuation = true;
-								bool_bracket = false;
+								bool_punctuation = false;
+								bool_bracket = true;
 								Judgement += punctuation.Judgement_Process_Line(tkn, "number");
 
 							}else{
@@ -1251,7 +1272,7 @@ public class Scanner {
 
 							bracket.addMap(tkn);
 							Judgement += punctuation.Judgement_Process_Line(tkn, "bracket");
-							bool_bracket = false;
+							bool_bracket = true;
 							bool_elseif = false;
 							bool_else = false;
 						}

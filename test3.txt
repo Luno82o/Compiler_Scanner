@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <cstring.h>
+
+int main(){
+    int a, *ib, c;
+    scanf("%d", &a);
+    c = 0;
+    printf("a = %d", &a);
+    do{
+        if(a > 5){
+            c = a;
+        }
+        elseif(i > 3){
+            *ib = a;
+        }
+        else{
+            c = a * 2; 
+        }
+    }while(a != 0);
+    return 0;
+}
