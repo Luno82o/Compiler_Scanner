@@ -143,6 +143,7 @@ public class Scanner {
 		boolean bool_punctuation = false;
 		boolean bool_bracket = false;
 		boolean bool_case = false;
+		boolean bool_double = false;
 
 		boolean bool_doWhile = false;
 		boolean bool_elseif = false;
@@ -256,6 +257,7 @@ public class Scanner {
 	    	        else if(compareString("printf", tkn))   {
 	    	        	state = 12;
 	    	        	bool_bracket = false;
+	    	        	bool_double = false;
 	    	        	reservedWord.addMap(tkn);
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
@@ -263,6 +265,7 @@ public class Scanner {
 	    	        else if(compareString("scanf", tkn)) {
 	    	        	state = 13;
 	    	        	bool_bracket = false;
+	    	        	bool_double = false;
 	    	        	reservedWord.addMap(tkn);
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
@@ -983,6 +986,7 @@ public class Scanner {
         				break;
         				
     				// printf 
+        				// printf 
         			case 12:
         				if(!bool_bracket && tkn.equals("(")) {
 	    					bool_bracket = true;
@@ -990,33 +994,72 @@ public class Scanner {
 							Judgement += op.Judgement_Process_Line(tkn, "bracket");
 	        			
         				} else if(bool_bracket){
-        					if (compareIdentifier(tkn)) {
+        					Matcher mat_identifier = ptn_identifier.matcher(tkn);
+        					if (bool_double) {
+        						boolean undefined = false;
     		        			if(tokenBuf.get(i).get(j-2).equals(",")) {
     		        				identifier.addMap(tkn);
 									Judgement += op.Judgement_Process_Line(tkn, "identifier");
-    	    						
-    		        			} else {
-    		        				printedToken.addMap(tkn);
+    		        			}if (tkn.equals("%")) {
+	    	        				String s = tokenBuf.get(i).get(j+1);
+	    	        				char fst = s.charAt(0);
+	    	        				String pointer_tmp = tkn + fst;
+	    	        				String a = "";
+	    	        				
+	    	        				for(int k=0 ; k<s.length() ; k++) {
+	    	        					if(k==0 && compareString("([cdf])", String.valueOf(fst)) ) {
+	    	        						formatSpecifier.addMap(pointer_tmp);
+											Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
+	    	        					
+	    	        					} else { 
+	    	        						undefined = true;
+	    	        						a +=s.charAt(k);
+		        						}
+	    	        				}
+	        						j++;
+	    	        				
+	    	        				if(undefined) {
+	    	        					printedToken.addMap(a);
+										Judgement += op.Judgement_Process_Line(a, "printed_token");
+	    	        				}
+	    		        		}else if (tkn.equals("\\")) {
+        		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+        		        				String pointer_tmp = "";
+                						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+                						formatSpecifier.addMap(pointer_tmp);
+    									Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
+                		        		j++;
+                		        		
+        		        			} else {
+        			        			undefinedToken.addMap(tkn);
+    									Judgement += op.Judgement_Process_Line(tkn, "undefined_token");
+        	    						state = 16;
+        			        		}
+        		        		}else if(tkn.equals("\"")) {
+        		        			bool_double=false;
+        		        			punctuation.addMap(tkn);
+    								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+        		        		}else if(mat_identifier.matches()){
+        		        			printedToken.addMap(tkn);
 									Judgement += op.Judgement_Process_Line(tkn, "printed_token");
-    	    						
+        		        		} else {//判斷printtoken
+        		        			String s="";
+        		        			while(!tokenBuf.get(i).get(j).equals(" ")){
+        		        				s+=tokenBuf.get(i).get(j);
+        		        				j++;
+        		        			}
+    		        				printedToken.addMap(s);
+									Judgement += op.Judgement_Process_Line(s, "printed_token");
     		        			}
-    		        		} else if (tkn.equals("%")||tkn.equals("\\")) {
-    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
-    		        				String pointer_tmp = "";
-            						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
-            						formatSpecifier.addMap(pointer_tmp);
-									Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
-            		        		j++;
-            		        		
-    		        			} else {
-    			        			undefinedToken.addMap(tkn);
-									Judgement += op.Judgement_Process_Line(tkn, "undefined_token");
-    	    						state = 16;
-    	    						
-    			        		}
-    		        		}else if (tkn.equals(",") || tkn.equals("\"")) {
-    		        			punctuation.addMap(tkn);
-								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+    		        		} else if (tkn.equals(",") || tkn.equals("\"")) {
+    		        			if(tkn.equals("\"")) {
+    		        				bool_double=true;
+    		        				punctuation.addMap(tkn);
+    								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+    		        			}else {
+    		        				punctuation.addMap(tkn);
+    		        				Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+    		        			}
         						
     		        		}else if(tkn.equals(")")) {
     	    					bool_bracket = false;
@@ -1050,32 +1093,62 @@ public class Scanner {
 							Judgement += op.Judgement_Process_Line(tkn, "bracket");
 		        			
         				} else if(bool_bracket){
-        					boolean undefined = false;
-        					if (tkn.equals("%")) {
-        						
-    	        				String s = tokenBuf.get(i).get(j+1);
-    	        				char fst = s.charAt(0);
-    	        				String pointer_tmp = tkn + fst;
-    	        				String a = "";
-    	        				
-    	        				for(int k=0 ; k<s.length() ; k++) {
-    	        					if(k==0 && compareString("([cdf])", String.valueOf(fst)) ) {
-    	        						formatSpecifier.addMap(pointer_tmp);
-										Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
-    	        					
-    	        					} else { 
-    	        						undefined = true;
-    	        						a +=s.charAt(k);
-	        						}
-    	        				}
-        						j++;
-    	        				
-    	        				if(undefined) {
-	    	        				undefinedToken.addMap(a);
-									Judgement += op.Judgement_Process_Line(a, "undefined_token");
-	        						state = 16;
-    	        				}
-    		        		}else if(tkn.equals("&")) {
+        					Matcher mat_identifier = ptn_identifier.matcher(tkn);
+        					if(bool_double) {
+	        					boolean undefined = false;
+	        					if (tkn.equals("%")) {
+	    	        				String s = tokenBuf.get(i).get(j+1);
+	    	        				char fst = s.charAt(0);
+	    	        				String pointer_tmp = tkn + fst;
+	    	        				String a = "";
+	    	        				
+	    	        				for(int k=0 ; k<s.length() ; k++) {
+	    	        					if(k==0 && compareString("([cdf])", String.valueOf(fst)) ) {
+	    	        						formatSpecifier.addMap(pointer_tmp);
+											Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
+	    	        					
+	    	        					} else { 
+	    	        						undefined = true;
+	    	        						a +=s.charAt(k);
+		        						}
+	    	        				}
+	        						j++;
+	    	        				if(undefined) {
+	    	        					printedToken.addMap(a);
+										Judgement += op.Judgement_Process_Line(a, "printed_token");
+		        						
+	    	        				}
+	    		        		}else if (tkn.equals("\\")) {
+        		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+        		        				String pointer_tmp = "";
+                						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+                						formatSpecifier.addMap(pointer_tmp);
+    									Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
+                		        		j++;
+                		        		
+        		        			} else {
+        			        			undefinedToken.addMap(tkn);
+    									Judgement += op.Judgement_Process_Line(tkn, "undefined_token");
+        	    						state = 16;
+        			        		}
+        		        		}else if(tkn.equals("\"")) {
+        		        			bool_double=false;
+        		        			punctuation.addMap(tkn);
+    								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+        		        		} else if(mat_identifier.matches()){
+        		        			printedToken.addMap(tkn);
+									Judgement += op.Judgement_Process_Line(tkn, "printed_token");
+        		        		} else {//判斷printtoken
+        		        			String s="";
+        		        			while(!tokenBuf.get(i).get(j).equals(" ")){
+        		        				s+=tokenBuf.get(i).get(j);
+        		        				j++;
+        		        			}
+    		        				printedToken.addMap(s);
+									Judgement += op.Judgement_Process_Line(s, "printed_token");
+    		        			}
+        					}
+        					else if(tkn.equals("&")) {
     		        			if(compareIdentifier(tokenBuf.get(i).get(j+1)) && identifier.get_TokenMap().containsKey(tokenBuf.get(i).get(j+1))) {
 //    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
     		        				String pointer_tmp = "";
@@ -1092,9 +1165,15 @@ public class Scanner {
     	    						state = 16;
     			        		}
     		        		}else if (tkn.equals(",") || tkn.equals("\"")) {
-    		        			punctuation.addMap(tkn);
-								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
-    		        			
+    		        			if(tkn.equals("\"")) {
+    		        				bool_double=true;
+    		        				punctuation.addMap(tkn);
+    								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+    		        			}else {
+    		        				punctuation.addMap(tkn);
+    		        				Judgement += op.Judgement_Process_Line(tkn, "punctuation");
+    		        			}
+        						
     		        		}else if(tkn.equals(";")){
     		        			punctuation.addMap(tkn);
 								Judgement += op.Judgement_Process_Line(tkn, "punctuation");
