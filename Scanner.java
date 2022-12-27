@@ -266,7 +266,22 @@ public class Scanner {
 	    	        	reservedWord.addMap(tkn);
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	    	        	
-	    	        }
+	    	        } else if (tkn.equals("*")) {
+	        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
+	        				state = 14;
+		        			String pointer_tmp = "";
+
+    						pointer_tmp = tkn + tokenBuf.get(i).get(++j);
+    						identifier.addMap(pointer_tmp);
+							Judgement += op.Judgement_Process_Line(pointer_tmp, "Identifier");
+		        			bool_punctuation = true;
+		        			
+	        			} else {
+		        			undefinedToken.addMap(tkn);
+							Judgement += op.Judgement_Process_Line(tkn, "Undefined_token");
+							state = 16;
+		        		}
+    				}
 	    	        else if(identifier.token_defined(tkn)) {
 						state = 14;
 						identifier.addMap(tkn);
@@ -463,7 +478,7 @@ public class Scanner {
         			case 3:
         				if(tkn.equals("main")) {
         					reservedWord.addMap(tkn);
-							Judgement += op.Judgement_Process_Line(tkn, "reserved");
+							Judgement += op.Judgement_Process_Line(tkn, "reservedword");
 		        			state = 1;
 		        		} else if (!bool_punctuation) {
     		        		if (compareIdentifier(tkn)) {
@@ -935,30 +950,30 @@ public class Scanner {
         				if (tkn.matches("[0-9]")||tkn.equals("\'")) {
     						if(tkn.matches("[0-9]")) {
     							number.addMap(tkn);
-    							System.out.println("token "+tkn+" belongs to number token");
+    							Judgement += op.Judgement_Process_Line(tkn, "number");
     						}else if(tkn.matches("\'")) {
     							String s = tkn;
     							for(int k=1; k<3;k++) {
     								s+=tokenBuf.get(i).get(++j);
     							}
     							character.addMap(s);
-    							System.out.println("token "+s+" belongs to character token");
+    							Judgement += op.Judgement_Process_Line(s, "character");
     							
     						}else{
     							undefinedToken.addMap(tkn);
-        						System.out.println("token "+tkn+" belongs to undefined token");
+    							Judgement += op.Judgement_Process_Line(tkn, "undefined");
         						state = 16;
     						}
     					}else if(bool_case && tkn.equals(":")){
 	    					bool_bracket = true;
 		        			bracket.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to bracket token");
+							Judgement += op.Judgement_Process_Line(tkn, "bracket");
 
     	    	        	bool_case = false;
 	    					bool_endLine = true;
         				}else {
 		        			undefinedToken.addMap(tkn);
-    						System.out.println("token "+tkn+" belongs to undefined token");
+							Judgement += op.Judgement_Process_Line(tkn, "undefined");
     						state = 16;
 		        		}
         				break;
@@ -986,7 +1001,7 @@ public class Scanner {
     		        				String pointer_tmp = "";
             						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
             						formatSpecifier.addMap(pointer_tmp);
-									Judgement += op.Judgement_Process_Line(pointer_tmp, "specifier_token");
+									Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
             		        		j++;
             		        		
     		        			} else {
@@ -1042,7 +1057,7 @@ public class Scanner {
     	        				for(int k=0 ; k<s.length() ; k++) {
     	        					if(k==0 && compareString("([cdf])", String.valueOf(fst)) ) {
     	        						formatSpecifier.addMap(pointer_tmp);
-										Judgement += op.Judgement_Process_Line(pointer_tmp, "specifier_token");
+										Judgement += op.Judgement_Process_Line(pointer_tmp, "Format_specifier");
     	        					
     	        					} else { 
     	        						undefined = true;
@@ -1057,7 +1072,8 @@ public class Scanner {
 	        						state = 16;
     	        				}
     		        		}else if(tkn.equals("&")) {
-    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1)) && identifier.get_TokenMap().containsKey(char_token)) {
+    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1)) && identifier.get_TokenMap().containsKey(tokenBuf.get(i).get(j+1))) {
+//    		        			if(compareIdentifier(tokenBuf.get(i).get(j+1))) {
     		        				String pointer_tmp = "";
             						pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
             						address.addMap(pointer_tmp);
