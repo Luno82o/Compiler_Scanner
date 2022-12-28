@@ -271,7 +271,7 @@ public class Scanner {
 	    	        	
 	    	        } else if (tkn.equals("*")) {
 	        			String pointer_tmp = "";
-	    	        	pointer_tmp = tkn + tokenBuf.get(i).get(j+1);
+	    	        	pointer_tmp = tkn + tokenBuf.get(i).get(++j);
 	    	        	
 	        			if(pointer.token_defined(pointer_tmp)) {
 	        				state = 14;
