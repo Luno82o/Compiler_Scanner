@@ -986,7 +986,6 @@ public class Scanner {
         				break;
         				
     				// printf 
-        				// printf 
         			case 12:
         				if(!bool_bracket && tkn.equals("(")) {
 	    					bool_bracket = true;
@@ -1066,7 +1065,10 @@ public class Scanner {
     		        			bracket.addMap(tkn);
 								Judgement += op.Judgement_Process_Line(tkn, "bracket");
     		        			
-    		        		}else {
+    		        		}else if(mat_identifier.matches() && identifier.get_TokenMap().containsKey(tkn)){
+								formatSpecifier.addMap(tkn);
+								Judgement += op.Judgement_Process_Line(tkn, "identifier");
+							}else {
     		        			undefinedToken.addMap(tkn);
 								Judgement += op.Judgement_Process_Line(tkn, "undefined_token");
         						state = 16;
