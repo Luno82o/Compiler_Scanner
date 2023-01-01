@@ -69,7 +69,6 @@ public class Scanner {
             //逐行讀取
             while (br.ready()) {
             	inputLine = br.readLine();
-//            	System.out.println(inputLine);
             	splitToken(inputLine);
             }
             
@@ -123,11 +122,12 @@ public class Scanner {
 
         }
         tokenBuf.add(tokensTmp_space);
-		System.out.println(tokensTmp_space);
+//		System.out.println(tokensTmp_space);
     }
 
-     
+
     Pattern ptn_libname = Pattern.compile("(<)([a-zA-Z]+)(.h>)"); 
+    Pattern ptn_hname = Pattern.compile("([a-zA-Z]+)(.h)"); 
 
     Pattern ptn_identifier = Pattern.compile("([a-zA-Z])([a-zA-Z0-9]*)"); 
 
@@ -162,9 +162,6 @@ public class Scanner {
     		for(int j=0 ; j<tokenBuf.get(i).size() ; j++) {
     			String tkn = tokenBuf.get(i).get(j);
     			if(tkn.equals(" ")) continue;
-    			
-//    			System.out.println("i: "+i+", j:"+j);
-//				System.out.println("token now(略過空格): "+tkn);
     			
     			if(bool_endLine) {
 	    			bool_endLine = false;
@@ -343,8 +340,29 @@ public class Scanner {
 						}
 						
 					}
-					
-	    	        else {
+					else if(tkn.equals("<")) {
+						comparator.addMap(tkn);
+						Judgement += op.Judgement_Process_Line(tkn, "comparator");
+						
+    					String library_tmp = "";
+    					for(int k=1 ; k<4 ; k++) 
+							library_tmp = library_tmp + tokenBuf.get(i).get(j+k);
+
+    					Matcher mat_hname = ptn_hname.matcher(library_tmp);
+    					if(mat_hname.matches()) {
+    						state = 16;
+    						undefinedToken.addMap(library_tmp);
+    						Judgement += op.Judgement_Process_Line(library_tmp, "Undefined_token");
+							j = j + 3;
+    					}else {
+    						state = 16;
+    						undefinedToken.addMap(tkn);
+    						Judgement += op.Judgement_Process_Line(tkn, "Undefined_token");
+
+    	    	        }
+					}
+	        		
+					else {
 						state = 16;
 						undefinedToken.addMap(tkn);
 						Judgement += op.Judgement_Process_Line(tkn, "Undefined_token");
@@ -374,7 +392,6 @@ public class Scanner {
         					String library_tmp = "";
         					
         					for(int k=0 ; k<5 ; k++) {
-            					System.out.println(tokenBuf.get(i).get(j+k));
     							library_tmp = library_tmp + tokenBuf.get(i).get(j+k);
     						}
         					
@@ -1469,7 +1486,6 @@ public class Scanner {
 						else{
 							undefinedToken.addMap(tkn);
 							Judgement += op.Judgement_Process_Line(tkn, "undefined_token");
-							System.out.println("token");
 							String skipped_token = null;
 							while((j+1) < tokenBuf.get(i).size()) {
 								skipped_token += tokenBuf.get(i).get(j);
