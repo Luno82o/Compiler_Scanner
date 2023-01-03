@@ -8,7 +8,7 @@ public class Main {
         //輸入檔名
         System.out.println("filename(xxx.txt):");
 
-        String filename = "test2.txt";
+        String filename = "test.txt";
         
 	    sc.readTxt(filename);
 	    sc.scan();
