@@ -174,6 +174,7 @@ public class Scanner {
 	        		}
 	        		else if(compareString("main", tkn)) {
 	        			state = 1;
+	        			reservedWord.addMap(tkn);
 						Judgement += op.Judgement_Process_Line(tkn, "ReservedWord");
 	        		}
 	        		else if(compareString("char", tkn)) {
